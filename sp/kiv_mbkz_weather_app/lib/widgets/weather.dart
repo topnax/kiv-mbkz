@@ -18,6 +18,7 @@ import 'package:kiv_mbkz_weather_app/widgets/particles/snow.dart';
 import 'package:kiv_mbkz_weather_app/widgets/widgets.dart';
 import 'package:kiv_mbkz_weather_app/blocs/blocs.dart';
 import 'package:simple_animations/simple_animations.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Weather extends StatefulWidget {
   @override
@@ -26,7 +27,7 @@ class Weather extends StatefulWidget {
 
 class _WeatherState extends State<Weather> with TickerProviderStateMixin {
   Completer<void> _refreshCompleter;
-  TabController _controller;
+  PageController _controller;
 
   Color _color;
 
@@ -57,17 +58,7 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
           ),
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: () async {
-              final city = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CitySelection(),
-                ),
-              );
-              if (city != null) {
-                BlocProvider.of<WeatherBloc>(context).add(FetchWeather(city: city));
-              }
-            },
+            onPressed: () => onCitySelected(context),
           )
         ],
       ),
@@ -91,14 +82,14 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
 
               return BlocBuilder<ThemeBloc, ThemeState>(
                 builder: (context, themeState) {
-                  _controller = TabController(vsync: this, length: weather.length);
+                  _controller = PageController();
                   _color = ThemeBloc.mapWeatherConditionToThemeData(weather[0].condition).color[700];
                   _previous = 0;
                   return BlocProvider<WeatherBackgroundBloc>(
                     create: (_) {
                       final bloc = WeatherBackgroundBloc(weathers: weather);
                       _controller.addListener(() {
-                        bloc.add(WeatherBackgroundChanged(tabIndex: _controller.index));
+                        bloc.add(WeatherBackgroundChanged(tabIndex: _controller.page.round()));
                       });
                       return bloc;
                     },
@@ -179,7 +170,8 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 Expanded(
-                                  child: TabBarView(
+                                  flex: 2,
+                                  child: PageView(
                                     controller: _controller,
                                     children: [
                                       for (var w in weather)
@@ -210,6 +202,14 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
                                           ),
                                         )
                                     ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 40.0),
+                                  child: SmoothPageIndicator(
+                                    controller: _controller, // PageController
+                                    count: 6,
+                                    effect: WormEffect(activeDotColor: Colors.white), // your preferred effect
                                   ),
                                 ),
                               ],
@@ -247,6 +247,18 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
         ),
       ),
     );
+  }
+
+  Future onCitySelected(BuildContext context) async {
+    final city = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CitySelection(),
+      ),
+    );
+    if (city != null) {
+      BlocProvider.of<WeatherBloc>(context).add(FetchWeather(city: city));
+    }
   }
 
   onBottom(Widget child) => Positioned.fill(

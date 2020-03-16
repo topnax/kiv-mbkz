@@ -20,6 +20,7 @@ class Weather extends Equatable {
   final double minTemp;
   final double temp;
   final double maxTemp;
+  final double windSpeed;
   final int humidity;
   final int locationId;
   final String created;
@@ -35,6 +36,7 @@ class Weather extends Equatable {
       this.maxTemp,
       this.locationId,
       this.created,
+      this.windSpeed,
       this.lastUpdated,
       this.location,
       this.applicableDate,
@@ -42,7 +44,7 @@ class Weather extends Equatable {
 
   @override
   List<Object> get props =>
-      [condition, formattedCondition, minTemp, temp, maxTemp, locationId, created, lastUpdated, location, humidity];
+      [condition, formattedCondition, minTemp, temp, maxTemp, locationId, created, lastUpdated, location, humidity, windSpeed];
 
   static List<Weather> fromJson(dynamic json) {
     var list = List<Weather>();
@@ -53,6 +55,7 @@ class Weather extends Equatable {
           minTemp: consolidatedWeather['min_temp'] as double,
           temp: consolidatedWeather['the_temp'] as double,
           maxTemp: consolidatedWeather['max_temp'] as double,
+          windSpeed: consolidatedWeather['wind_speed'] as double,
           humidity: consolidatedWeather['humidity'] as int,
           locationId: json['woeid'] as int,
           created: consolidatedWeather['created'],

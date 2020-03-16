@@ -42,13 +42,33 @@ class CombinedWeatherTemperature extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.opacity, color: Colors.white,size: 16,),
+            Padding(
+              padding: const EdgeInsets.only(right:4.0),
+              child: Icon(Icons.opacity, color: Colors.white,size: 16,),
+            ),
             Text("${(weather.humidity).round().toString()}%",
               style: TextStyle(
                 fontWeight: FontWeight.w200,
                 color: Colors.white,
               ),),
           ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top:4.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right:4.0),
+                child: Icon(Icons.toys, color: Colors.white,size: 16,),
+              ),
+              Text("${(weather.windSpeed * 1.609).round().toString()} km/h",
+                style: TextStyle(
+                  fontWeight: FontWeight.w200,
+                  color: Colors.white,
+              ),),
+            ],
+          ),
         ),
         Center(
           child: Padding(
