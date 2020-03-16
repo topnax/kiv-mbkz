@@ -26,10 +26,6 @@ class CombinedWeatherTemperature extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(20.0),
-              child: WeatherConditions(condition: weather.condition),
-            ),
-            Padding(
-              padding: EdgeInsets.all(20.0),
               child: BlocBuilder<SettingsBloc, SettingsState>(
                 builder: (context, state) {
                   return Temperature(
@@ -43,13 +39,27 @@ class CombinedWeatherTemperature extends StatelessWidget {
             ),
           ],
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.opacity, color: Colors.white,size: 16,),
+            Text("${(weather.humidity).round().toString()}%",
+              style: TextStyle(
+                fontWeight: FontWeight.w200,
+                color: Colors.white,
+              ),),
+          ],
+        ),
         Center(
-          child: Text(
-            weather.formattedCondition,
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w200,
-              color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Text(
+              weather.formattedCondition,
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w200,
+                color: Colors.white,
+              ),
             ),
           ),
         ),

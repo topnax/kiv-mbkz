@@ -20,54 +20,45 @@ class Weather extends Equatable {
   final double minTemp;
   final double temp;
   final double maxTemp;
+  final int humidity;
   final int locationId;
   final String created;
   final DateTime lastUpdated;
   final DateTime applicableDate;
   final String location;
 
-  const Weather({
-    this.condition,
-    this.formattedCondition,
-    this.minTemp,
-    this.temp,
-    this.maxTemp,
-    this.locationId,
-    this.created,
-    this.lastUpdated,
-    this.location,
-    this.applicableDate
-  });
+  const Weather(
+      {this.condition,
+      this.formattedCondition,
+      this.minTemp,
+      this.temp,
+      this.maxTemp,
+      this.locationId,
+      this.created,
+      this.lastUpdated,
+      this.location,
+      this.applicableDate,
+      this.humidity});
 
   @override
-  List<Object> get props => [
-        condition,
-        formattedCondition,
-        minTemp,
-        temp,
-        maxTemp,
-        locationId,
-        created,
-        lastUpdated,
-        location,
-      ];
+  List<Object> get props =>
+      [condition, formattedCondition, minTemp, temp, maxTemp, locationId, created, lastUpdated, location, humidity];
 
   static List<Weather> fromJson(dynamic json) {
     var list = List<Weather>();
     for (var consolidatedWeather in json["consolidated_weather"]) {
       list.add(Weather(
-        condition: _mapStringToWeatherCondition(
-            consolidatedWeather['weather_state_abbr']),
-        formattedCondition: consolidatedWeather['weather_state_name'],
-        minTemp: consolidatedWeather['min_temp'] as double,
-        temp: consolidatedWeather['the_temp'] as double,
-        maxTemp: consolidatedWeather['max_temp'] as double,
-        locationId: json['woeid'] as int,
-        created: consolidatedWeather['created'],
-        lastUpdated: DateTime.now(),
-        location: json['title'],
-        applicableDate: DateTime.parse(consolidatedWeather["applicable_date"])
-      ));
+          condition: _mapStringToWeatherCondition(consolidatedWeather['weather_state_abbr']),
+          formattedCondition: consolidatedWeather['weather_state_name'],
+          minTemp: consolidatedWeather['min_temp'] as double,
+          temp: consolidatedWeather['the_temp'] as double,
+          maxTemp: consolidatedWeather['max_temp'] as double,
+          humidity: consolidatedWeather['humidity'] as int,
+          locationId: json['woeid'] as int,
+          created: consolidatedWeather['created'],
+          lastUpdated: DateTime.now(),
+          location: json['title'],
+          applicableDate: DateTime.parse(consolidatedWeather["applicable_date"])));
     }
 
     return list;

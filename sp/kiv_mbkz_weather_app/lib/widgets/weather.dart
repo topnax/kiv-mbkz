@@ -1,14 +1,17 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:drawing_animation/drawing_animation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather_background_bloc.dart';
 import 'package:kiv_mbkz_weather_app/models/models.dart';
 import 'package:kiv_mbkz_weather_app/widgets/animated_background.dart';
+import 'package:kiv_mbkz_weather_app/widgets/animated_sun.dart';
 import 'package:kiv_mbkz_weather_app/widgets/animated_wave.dart';
 import 'package:kiv_mbkz_weather_app/widgets/painters/snow_painter.dart';
+import 'package:kiv_mbkz_weather_app/widgets/particles/clouds.dart';
 import 'package:kiv_mbkz_weather_app/widgets/particles/rain.dart';
 import 'package:kiv_mbkz_weather_app/widgets/particles/snow.dart';
 
@@ -106,56 +109,109 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
                           children: [
                             Positioned.fill(
                               child: Container(
-                                color: Colors.black,
+                                color: Colors.transparent,
                                 child: AnimatedOpacity(
                                   duration: Duration(milliseconds: 500),
                                   opacity: state.visible ? 1.0 : 0.0,
                                   child: AnimatedBackground(
                                     color1: state.color,
-                                    child: state.condition == WeatherCondition.snow ?  Snow(70) : ((state.condition ==  WeatherCondition.lightRain || state.condition == WeatherCondition.heavyRain) ? Rain(150) : Text("lol")),
+                                    child: Builder(
+                                      // ignore: missing_return
+                                      builder: (context) {
+                                        switch (state.condition) {
+                                          case WeatherCondition.snow:
+                                            return Stack(children: [
+                                              Positioned.fill(child: Snow(70)),
+                                              Positioned.fill(child: Clouds(7))
+                                            ]);
+                                            break;
+                                          case WeatherCondition.heavyRain:
+                                            return Stack(children: [
+                                              Positioned.fill(child: Rain(150)),
+                                              Positioned.fill(child: Clouds(20))
+                                            ]);
+                                            break;
+                                          case WeatherCondition.lightRain:
+                                            return Stack(children: [
+                                              Positioned.fill(child: Rain(100)),
+                                              Positioned.fill(child: Clouds(10))
+                                            ]);
+                                            break;
+                                          case WeatherCondition.hail:
+                                            return Rain(50);
+                                            break;
+                                          case WeatherCondition.showers:
+                                            return Stack(children: [
+                                              Positioned.fill(child: Rain(180)),
+                                              Positioned.fill(child: Clouds(30))
+                                            ]);
+                                          case WeatherCondition.heavyCloud:
+                                            return Clouds(10);
+                                          case WeatherCondition.lightCloud:
+                                            return Clouds(5);
+                                            break;
+
+                                          case WeatherCondition.clear:
+                                            return AnimatedSun();
+                                            break;
+                                          case WeatherCondition.thunderstorm:
+                                            return Stack(children: [
+                                              Positioned.fill(child: Rain(175)),
+                                              Positioned.fill(child: Clouds(18, thunder: true))
+                                            ]);
+                                            break;
+                                          default:
+                                            return Text("none");
+                                        }
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-
-
                             Positioned.fill(
-                                child: TabBarView(
-                              controller: _controller,
-                              children: [
-                                for (var w in weather)
-                                  RefreshIndicator(
-                                    onRefresh: () {
-                                      BlocProvider.of<WeatherBloc>(context).add(
-                                        RefreshWeather(city: w.location),
-                                      );
-                                      return _refreshCompleter.future;
-                                    },
-                                    child: ListView(
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: EdgeInsets.only(top: 100.0),
-                                          child: Center(
-                                            child: Location(location: w.location),
+                                child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.only(top: 100.0),
+                                  child: Center(
+                                    child: Location(location: weather[0].location),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: TabBarView(
+                                    controller: _controller,
+                                    children: [
+                                      for (var w in weather)
+                                        RefreshIndicator(
+                                          onRefresh: () {
+                                            BlocProvider.of<WeatherBloc>(context).add(
+                                              RefreshWeather(city: w.location),
+                                            );
+                                            return _refreshCompleter.future;
+                                          },
+                                          child: ListView(
+                                            children: <Widget>[
+                                              Padding(
+                                                padding: const EdgeInsets.only(top: 8.0),
+                                                child: Center(
+                                                  child: LastUpdated(dateTime: w.applicableDate),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(vertical: 50.0),
+                                                child: Center(
+                                                  child: CombinedWeatherTemperature(
+                                                    weather: w,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(top: 8.0),
-                                          child: Center(
-                                            child: LastUpdated(dateTime: w.applicableDate),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(vertical: 50.0),
-                                          child: Center(
-                                            child: CombinedWeatherTemperature(
-                                              weather: w,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
+                                        )
+                                    ],
+                                  ),
+                                ),
                               ],
                             )),
                             onBottom(AnimatedWave(
@@ -199,5 +255,4 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
           child: child,
         ),
       );
-
 }

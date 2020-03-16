@@ -14,8 +14,8 @@ class SnowModel {
   }
 
   restart({Duration time = Duration.zero}) {
-    final startPosition = Offset(-0.4 + 1.6 * random.nextDouble(), -0.2);
-    final endPosition = Offset(-0.2 + 1.4 * random.nextDouble(), 1.2);
+    final startPosition = Offset(-0.4, 0.2);
+    final endPosition = Offset(-0.2 + 1.4 * random.nextDouble(), 0.2);
     final duration = Duration(milliseconds: 2000 + random.nextInt(4500));
 
     tween = MultiTrackTween([

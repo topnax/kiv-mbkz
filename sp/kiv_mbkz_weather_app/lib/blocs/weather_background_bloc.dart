@@ -18,7 +18,7 @@ class WeatherBackgroundState extends Equatable {
         assert(color != null);
 
   @override
-  List<Object> get props => [ color, visible];
+  List<Object> get props => [ color, visible, condition];
 }
 
 abstract class WeatherBackgroundEvent extends Equatable {
@@ -53,9 +53,10 @@ class WeatherBackgroundBloc extends Bloc<WeatherBackgroundEvent, WeatherBackgrou
     if (event is WeatherBackgroundChanged) {
       var condition = weathers[event.tabIndex].condition;
       var color = ThemeBloc.mapWeatherConditionToThemeData(condition).color;
-      if(color != state.color) {
+      if(condition != state.condition) {
         yield WeatherBackgroundState(color: state.color, visible: false, condition: state.condition);
         await Future.delayed(Duration(milliseconds: 500));
+      debugPrint(condition.toString());
         yield WeatherBackgroundState(color: color, visible: true, condition: condition);
       }
     }
