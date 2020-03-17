@@ -6,6 +6,7 @@ import 'package:drawing_animation/drawing_animation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather_background_bloc.dart';
 import 'package:kiv_mbkz_weather_app/models/models.dart';
 import 'package:kiv_mbkz_weather_app/widgets/animated_background.dart';
@@ -32,8 +33,9 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
 
   Color _color;
 
-  int _previous;
+  bool initLoad = true;
 
+  int _previous;
 
   @override
   void initState() {
@@ -54,10 +56,40 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
               _refreshCompleter?.complete();
               _refreshCompleter = Completer();
             }
+            initLoad = false;
           },
           builder: (context, state) {
             if (state is WeatherLoading) {
-              return Center(child: CircularProgressIndicator());
+              return Stack(children: [
+                Positioned.fill(child: AnimatedBackground(color1: Colors.green)),
+                Center(
+                    child: SpinKitRotatingCircle(
+                  color: Colors.white,
+                  size: 50.0,
+                )),
+                BottomPositionedFill(
+                    child: AnimatedWave(
+                  height: 180,
+                  speed: 1.0,
+                )),
+                BottomPositionedFill(
+                    child: AnimatedWave(
+                  height: 120,
+                  speed: 0.9,
+                  offset: pi,
+                )),
+                BottomPositionedFill(
+                    child: AnimatedWave(
+                  height: 220,
+                  speed: 1.2,
+                  offset: pi / 2,
+                ))
+              ]);
+              return Center(
+                  child: SpinKitRotatingCircle(
+                color: Colors.white,
+                size: 50.0,
+              ));
             }
             if (state is WeatherLoaded) {
               final weather = state.weather;
@@ -82,7 +114,7 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
                           children: [
                             Positioned.fill(
                               child: Container(
-                                color: Colors.transparent,
+                                color: Colors.black87,
                                 child: AnimatedOpacity(
                                   duration: Duration(milliseconds: 500),
                                   opacity: state.visible ? 1.0 : 0.0,
@@ -100,7 +132,7 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
                                             break;
                                           case WeatherCondition.heavyRain:
                                             return Stack(children: [
-                                              Positioned.fill(child: Rain(150)),
+                                              Positioned.fill(child: Rain(160)),
                                               Positioned.fill(child: Clouds(20))
                                             ]);
                                             break;
@@ -115,7 +147,7 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
                                             break;
                                           case WeatherCondition.showers:
                                             return Stack(children: [
-                                              Positioned.fill(child: Rain(180)),
+                                              Positioned.fill(child: Rain(210)),
                                               Positioned.fill(child: Clouds(30))
                                             ]);
                                           case WeatherCondition.heavyCloud:
@@ -156,11 +188,11 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
                                   child: PageView(
                                     controller: _controller,
                                     children: [
-                                      for (var w in weather)
+                                      for (var i = 0; i < weather.length; i++)
                                         RefreshIndicator(
                                           onRefresh: () {
                                             BlocProvider.of<WeatherBloc>(context).add(
-                                              RefreshWeather(city: w.location),
+                                              RefreshWeather(city: weather[i].location),
                                             );
                                             return _refreshCompleter.future;
                                           },
@@ -169,14 +201,14 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
                                               Padding(
                                                 padding: const EdgeInsets.only(top: 8.0),
                                                 child: Center(
-                                                  child: LastUpdated(dateTime: w.applicableDate),
+                                                  child: LastUpdated(dateTime: weather[i].applicableDate, wIndex: i),
                                                 ),
                                               ),
                                               Padding(
                                                 padding: EdgeInsets.symmetric(vertical: 50.0),
                                                 child: Center(
                                                   child: CombinedWeatherTemperature(
-                                                    weather: w,
+                                                    weather: weather[i],
                                                   ),
                                                 ),
                                               ),
@@ -193,10 +225,15 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
                                     count: 6,
                                     effect: WormEffect(activeDotColor: Colors.white), // your preferred effect
                                   ),
-                                )   ,
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 40.0),
-                                  child: IconButton(icon: Icon(Icons.arrow_back_ios,color: Colors.white,), onPressed: () =>       BlocProvider.of<WeatherBloc>(context).add(ResetWeather())),
+                                  child: IconButton(
+                                      icon: Icon(
+                                        Icons.arrow_back_ios,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () => BlocProvider.of<WeatherBloc>(context).add(ResetWeather())),
                                 ),
                               ],
                             )),
@@ -222,10 +259,14 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
                 },
               );
             }
+
             if (state is WeatherError) {
-              return InitialScreenWidget(error: "Something went wrong");
+              return InitialScreenWidget(
+                error: "Something went wrong",
+                initLoad: initLoad,
+              );
             }
-            return InitialScreenWidget();
+            return InitialScreenWidget(initLoad: initLoad);
           },
         ),
       ),
@@ -244,111 +285,202 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
     }
   }
 
-  onBottom(Widget child) => BottomPositionedFill(child: child,);
+  onBottom(Widget child) => BottomPositionedFill(
+        child: child,
+      );
 }
 
 class InitialScreenWidget extends StatelessWidget {
+  final controller = PageController(viewportFraction: 0.8);
 
   final String error;
 
+  final bool initLoad;
+
   final _cityNameController = TextEditingController();
 
-  InitialScreenWidget({
-    Key key,
-    this.error
-  }) : super(key: key);
+  InitialScreenWidget({Key key, this.error, this.initLoad}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
       Positioned.fill(child: AnimatedBackground(color1: Colors.green)),
-      Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50),
-            child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-            Text("MBKZ Flutter Weather",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w200,
-                  color: Colors.white,
-                )),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Stanislav Král",
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w200,
-                    color: Colors.white,
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 50.0, bottom: 15.0),
-              child: TextField(
-                cursorColor: Colors.white,
-                style: TextStyle(color:Colors.white, fontWeight: FontWeight.w300),
-                controller: _cityNameController,
-                decoration: new InputDecoration(
-                  hintText: "City name",
-                  hintStyle: TextStyle(color: Colors.white60),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      borderSide: BorderSide(color: Colors.white60)),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      borderSide: BorderSide(color: Colors.white60)),
-                  filled: true,
-                  contentPadding:
-                  EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
+      FadeIn(
+          initLoad ? 3 : 0,
+          Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Align(
+                  alignment: Alignment.topCenter,
+                  child: FadeIn(
+                      initLoad ? 5 : 2,
+                      FractionallySizedBox(
+                          widthFactor: 0.4,
+                          child: AspectRatio(aspectRatio: 1, child: Image.asset("assets/flutter.png"))),
+                      initLoad)),
+              SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 45.0),
+                      child: Text("MBKZ Flutter Weather",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w200,
+                            color: Colors.white,
+                          )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Stanislav Král",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w200,
+                            color: Colors.white,
+                          )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24.0),
+                      child: SizedBox(
+                        height: 40,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          children: List.generate(
+                            6,
+                            (_) => _buildCityButton("London", context),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 50),
+                      child: TextField(
+                        cursorColor: Colors.white,
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300),
+                        controller: _cityNameController,
+                        decoration: new InputDecoration(
+                          hintText: "City name",
+                          hintStyle: TextStyle(color: Colors.white60),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                              borderSide: BorderSide(color: Colors.white60)),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                              borderSide: BorderSide(color: Colors.white60)),
+                          filled: true,
+                          contentPadding: EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
+                        ),
+                      ),
+                    ),
+                    if (error != null) Text(error),
+                    FlatButton(
+                      child: Text("SEARCH",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 16,
+                            color: Colors.white,
+                          )),
+                      onPressed: () =>
+                          {BlocProvider.of<WeatherBloc>(context).add(FetchWeather(city: _cityNameController.text))},
+                    )
+                  ],
                 ),
-
               ),
-            ),
-            if (error != null)
-              Text(error),
-            FlatButton(child: Text("SEARCH",style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 16,
-              color: Colors.white,
-
-            )),  onPressed: () => {      BlocProvider.of<WeatherBloc>(context).add(FetchWeather(city: _cityNameController.text))
-            },)
-        ],
-      ),
+            ],
           )),
-      BottomPositionedFill(child: AnimatedWave(
+          initLoad),
+      BottomPositionedFill(
+          child: AnimatedWave(
         height: 180,
         speed: 1.0,
       )),
-      BottomPositionedFill( child: AnimatedWave(
+      BottomPositionedFill(
+          child: AnimatedWave(
         height: 120,
         speed: 0.9,
         offset: pi,
       )),
-      BottomPositionedFill(child: AnimatedWave(
+      BottomPositionedFill(
+          child: AnimatedWave(
         height: 220,
         speed: 1.2,
         offset: pi / 2,
       ))
     ]);
   }
+
+  Center _buildCityButton(String cityName, context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(15.0),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(15.0),
+            onTap: () => BlocProvider.of<WeatherBloc>(context).add(FetchWeather(city: cityName)),
+            child: Container(
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(15.0)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Center(
+                    child: Text(cityName,
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 14))),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class FadeIn extends StatelessWidget {
+  final double delay;
+  final Widget child;
+  final bool enable;
+
+  FadeIn(this.delay, this.child, this.enable);
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("this is enable " + enable.toString());
+    if (!enable) {
+      return child;
+    }
+    final tween = MultiTrackTween([
+      Track("opacity").add(Duration(milliseconds: 500), Tween(begin: 0.0, end: 1.0)),
+      Track("translateX").add(Duration(milliseconds: 500), Tween(begin: 130.0, end: 0.0), curve: Curves.easeOut)
+    ]);
+
+    return ControlledAnimation(
+      delay: Duration(milliseconds: (300 * delay).round()),
+      duration: tween.duration,
+      tween: tween,
+      child: child,
+      builderWithChild: (context, child, animation) => Opacity(
+        opacity: animation["opacity"],
+        child: Transform.translate(offset: Offset(animation["translateX"], 0), child: child),
+      ),
+    );
+  }
 }
 
 class BottomPositionedFill extends StatelessWidget {
   final Widget child;
-  const BottomPositionedFill({
-    Key key,
-    this.child
-  }) : super(key: key);
+
+  const BottomPositionedFill({Key key, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Positioned.fill(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: child,
-          ),
-        );
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: child,
+      ),
+    );
   }
 }
