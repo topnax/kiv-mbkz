@@ -20,6 +20,11 @@ class FetchWeather extends WeatherEvent {
   List<Object> get props => [city];
 }
 
+class ResetWeather extends WeatherEvent {
+  @override
+  List<Object> get props => [];
+}
+
 class RefreshWeather extends WeatherEvent {
   final String city;
 
@@ -66,6 +71,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       yield* _mapFetchWeatherToState(event);
     } else if (event is RefreshWeather) {
       yield* _mapRefreshWeatherToState(event);
+    } else if (event is ResetWeather) {
+      yield WeatherEmpty();
     }
   }
 

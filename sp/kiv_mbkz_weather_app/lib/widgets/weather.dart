@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:drawing_animation/drawing_animation.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
 
   int _previous;
 
+
   @override
   void initState() {
     super.initState();
@@ -42,26 +44,6 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('MBKZ Weather'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Settings(),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () => onCitySelected(context),
-          )
-        ],
-      ),
       body: Center(
         child: BlocConsumer<WeatherBloc, WeatherState>(
           listener: (context, state) {
@@ -164,7 +146,7 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
                                 child: Column(
                               children: <Widget>[
                                 Padding(
-                                  padding: EdgeInsets.only(top: 100.0),
+                                  padding: EdgeInsets.only(top: 150.0),
                                   child: Center(
                                     child: Location(location: weather[0].location),
                                   ),
@@ -211,6 +193,10 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
                                     count: 6,
                                     effect: WormEffect(activeDotColor: Colors.white), // your preferred effect
                                   ),
+                                )   ,
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 40.0),
+                                  child: IconButton(icon: Icon(Icons.arrow_back_ios,color: Colors.white,), onPressed: () =>       BlocProvider.of<WeatherBloc>(context).add(ResetWeather())),
                                 ),
                               ],
                             )),
@@ -237,12 +223,9 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
               );
             }
             if (state is WeatherError) {
-              return Text(
-                'Something went wrong!',
-                style: TextStyle(color: Colors.red),
-              );
+              return InitialScreenWidget(error: "Something went wrong");
             }
-            return Center(child: Text('Please Select a Location'));
+            return InitialScreenWidget();
           },
         ),
       ),
@@ -261,10 +244,111 @@ class _WeatherState extends State<Weather> with TickerProviderStateMixin {
     }
   }
 
-  onBottom(Widget child) => Positioned.fill(
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: child,
-        ),
-      );
+  onBottom(Widget child) => BottomPositionedFill(child: child,);
+}
+
+class InitialScreenWidget extends StatelessWidget {
+
+  final String error;
+
+  final _cityNameController = TextEditingController();
+
+  InitialScreenWidget({
+    Key key,
+    this.error
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(children: [
+      Positioned.fill(child: AnimatedBackground(color1: Colors.green)),
+      Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50),
+            child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+            Text("MBKZ Flutter Weather",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w200,
+                  color: Colors.white,
+                )),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Stanislav Král",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w200,
+                    color: Colors.white,
+                  )),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 50.0, bottom: 15.0),
+              child: TextField(
+                cursorColor: Colors.white,
+                style: TextStyle(color:Colors.white, fontWeight: FontWeight.w300),
+                controller: _cityNameController,
+                decoration: new InputDecoration(
+                  hintText: "City name",
+                  hintStyle: TextStyle(color: Colors.white60),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      borderSide: BorderSide(color: Colors.white60)),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      borderSide: BorderSide(color: Colors.white60)),
+                  filled: true,
+                  contentPadding:
+                  EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
+                ),
+
+              ),
+            ),
+            if (error != null)
+              Text(error),
+            FlatButton(child: Text("SEARCH",style: TextStyle(
+              fontWeight: FontWeight.w300,
+              fontSize: 16,
+              color: Colors.white,
+
+            )),  onPressed: () => {      BlocProvider.of<WeatherBloc>(context).add(FetchWeather(city: _cityNameController.text))
+            },)
+        ],
+      ),
+          )),
+      BottomPositionedFill(child: AnimatedWave(
+        height: 180,
+        speed: 1.0,
+      )),
+      BottomPositionedFill( child: AnimatedWave(
+        height: 120,
+        speed: 0.9,
+        offset: pi,
+      )),
+      BottomPositionedFill(child: AnimatedWave(
+        height: 220,
+        speed: 1.2,
+        offset: pi / 2,
+      ))
+    ]);
+  }
+}
+
+class BottomPositionedFill extends StatelessWidget {
+  final Widget child;
+  const BottomPositionedFill({
+    Key key,
+    this.child
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: child,
+          ),
+        );
+  }
 }
