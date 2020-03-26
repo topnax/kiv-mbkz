@@ -6,13 +6,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiv_mbkz_weather_app/blocs/settings_bloc.dart';
 import 'package:kiv_mbkz_weather_app/blocs/theme_bloc.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather_bloc.dart';
-import 'package:kiv_mbkz_weather_app/repositories/repositories.dart';
-import 'package:kiv_mbkz_weather_app/repositories/weather_repository.dart';
+import 'package:kiv_mbkz_weather_app/blocs/weather_history_bloc.dart';
+import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_client.dart';
+import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_repository.dart';
+import 'package:kiv_mbkz_weather_app/repositories/weather/repositories.dart';
+import 'package:kiv_mbkz_weather_app/repositories/weather/weather_repository.dart';
 import 'package:kiv_mbkz_weather_app/simple_bloc_delegate.dart';
 import 'package:kiv_mbkz_weather_app/widgets/weather.dart';
 
-
-void main() {
+void main() async {
   final WeatherRepository weatherRepository = WeatherRepository(
     weatherApiClient: WeatherApiClient(
       httpClient: http.Client(),
@@ -48,10 +50,20 @@ class App extends StatelessWidget {
         return MaterialApp(
           title: 'MBKZ Weather',
           theme: themeState.theme,
-          home: BlocProvider(
-            create: (context) => WeatherBloc(
-              weatherRepository: weatherRepository,
-            ),
+          home: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => WeatherBloc(
+                  weatherRepository: weatherRepository,
+                ),
+                child: Weather(),
+              ),
+              BlocProvider(
+                create: (context) => WeatherHistoryBloc(
+                    persistentStorageRepository: PersistentStorageRepository(PreferencesClient()),
+                    weatherRepository: weatherRepository),
+              ),
+            ],
             child: Weather(),
           ),
         );

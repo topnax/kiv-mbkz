@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-
-import 'package:kiv_mbkz_weather_app/repositories/repositories.dart';
 import 'package:kiv_mbkz_weather_app/models/models.dart';
+import 'package:kiv_mbkz_weather_app/repositories/weather/repositories.dart';
+import 'package:meta/meta.dart';
 
 abstract class WeatherEvent extends Equatable {
   const WeatherEvent();
@@ -59,8 +58,7 @@ class WeatherError extends WeatherState {}
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final WeatherRepository weatherRepository;
 
-  WeatherBloc({@required this.weatherRepository})
-      : assert(weatherRepository != null);
+  WeatherBloc({@required this.weatherRepository}) : assert(weatherRepository != null);
 
   @override
   WeatherState get initialState => WeatherEmpty();
@@ -77,15 +75,16 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   }
 
   Stream<WeatherState> _mapFetchWeatherToState(FetchWeather event) async* {
-    yield WeatherLoading();
-    try {
-      final List<Weather> weather = await weatherRepository.getWeather(event.city);
-      yield WeatherLoaded(weather: weather);
-    } catch (e,s) {
-
-      print("caught $e");
-      print("at $s");
-      yield WeatherError();
+    if (event.city.isNotEmpty) {
+      yield WeatherLoading();
+      try {
+        final List<Weather> weather = await weatherRepository.getWeather(event.city);
+        yield WeatherLoaded(weather: weather);
+      } catch (e, s) {
+        print("caught $e");
+        print("at $s");
+        yield WeatherError();
+      }
     }
   }
 

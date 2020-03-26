@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:kiv_mbkz_weather_app/models/weather.dart';
-import 'package:kiv_mbkz_weather_app/repositories/repositories.dart';
+import 'package:kiv_mbkz_weather_app/repositories/weather/repositories.dart';
 import 'package:meta/meta.dart';
 
 
