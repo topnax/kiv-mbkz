@@ -9,9 +9,9 @@ import 'package:kiv_mbkz_weather_app/blocs/blocs.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather_background_bloc.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather_history_bloc.dart';
 import 'package:kiv_mbkz_weather_app/models/models.dart';
-import 'package:kiv_mbkz_weather_app/widgets/animated_background.dart';
-import 'package:kiv_mbkz_weather_app/widgets/animated_sun.dart';
-import 'package:kiv_mbkz_weather_app/widgets/animated_wave.dart';
+import 'package:kiv_mbkz_weather_app/widgets/animated/animated_background.dart';
+import 'package:kiv_mbkz_weather_app/widgets/animated/animated_sun.dart';
+import 'package:kiv_mbkz_weather_app/widgets/animated/animated_wave.dart';
 import 'package:kiv_mbkz_weather_app/widgets/particles/clouds.dart';
 import 'package:kiv_mbkz_weather_app/widgets/particles/rain.dart';
 import 'package:kiv_mbkz_weather_app/widgets/particles/snow.dart';
@@ -19,12 +19,12 @@ import 'package:kiv_mbkz_weather_app/widgets/widgets.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class Weather extends StatefulWidget {
+class WeatherScreen extends StatefulWidget {
   @override
-  State<Weather> createState() => _WeatherState();
+  State<WeatherScreen> createState() => _WeatherScreenState();
 }
 
-class _WeatherState extends State<Weather> with TickerProviderStateMixin {
+class _WeatherScreenState extends State<WeatherScreen> with TickerProviderStateMixin {
   Completer<void> _refreshCompleter;
   PageController _controller;
 
@@ -471,7 +471,7 @@ class InitialScreenWidget extends StatelessWidget {
 }
 
 _openFilterRecordsDialog(context) async {
-  var result = await showDialog(
+  await showDialog(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {

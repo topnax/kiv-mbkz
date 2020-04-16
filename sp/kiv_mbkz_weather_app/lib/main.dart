@@ -12,7 +12,7 @@ import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_reposi
 import 'package:kiv_mbkz_weather_app/repositories/weather/repositories.dart';
 import 'package:kiv_mbkz_weather_app/repositories/weather/weather_repository.dart';
 import 'package:kiv_mbkz_weather_app/simple_bloc_delegate.dart';
-import 'package:kiv_mbkz_weather_app/widgets/weather.dart';
+import 'package:kiv_mbkz_weather_app/widgets/weather_screen.dart';
 
 void main() async {
   final WeatherRepository weatherRepository = WeatherRepository(
@@ -56,7 +56,7 @@ class App extends StatelessWidget {
                 create: (context) => WeatherBloc(
                   weatherRepository: weatherRepository,
                 ),
-                child: Weather(),
+                child: WeatherScreen(),
               ),
               BlocProvider(
                 create: (context) => WeatherHistoryBloc(
@@ -64,7 +64,7 @@ class App extends StatelessWidget {
                     weatherRepository: weatherRepository),
               ),
             ],
-            child: Weather(),
+            child: WeatherScreen(),
           ),
         );
       },
