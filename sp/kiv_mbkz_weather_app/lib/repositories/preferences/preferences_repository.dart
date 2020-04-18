@@ -2,7 +2,7 @@ import 'package:kiv_mbkz_weather_app/models/city.dart';
 import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_client.dart';
 
 class PersistentStorageRepository {
-  static const MAX_RECENTLY_SEARCHED_CITIES_COUNT = 6;
+  static const MAX_RECENTLY_SEARCHED_CITIES_COUNT = 5;
 
   final PersistentStorage storage;
 

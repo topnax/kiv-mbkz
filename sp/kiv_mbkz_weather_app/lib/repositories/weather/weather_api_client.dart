@@ -5,7 +5,6 @@ import 'package:kiv_mbkz_weather_app/models/models.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 
-
 class WeatherApiClient {
   static const baseUrl = 'https://www.metaweather.com';
   final http.Client httpClient;
@@ -20,6 +19,10 @@ class WeatherApiClient {
     }
 
     final locationJson = jsonDecode(locationResponse.body) as List;
+
+    if (locationJson.length == 0) {
+      throw Exception('empty');
+    }
     return (locationJson.first)['woeid'];
   }
 

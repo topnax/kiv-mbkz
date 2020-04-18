@@ -97,10 +97,6 @@ class WeatherHistoryBloc extends Bloc<WeatherHistoryEvent, WeatherHistoryState> 
   Stream<WeatherHistoryState> _loadHistory() async* {
     var cities = await persistentStorageRepository.getRecentlySearchedCitiesNames();
     if (cities.length > 0) {
-      debugPrint("history not empty");
-      for (var city in cities) {
-        await weatherRepository.getWeatherByLocationId(city.woeid);
-      }
       yield WeatherHistoryLoaded(cities: cities);
     } else {
       debugPrint("history is EMPTY");

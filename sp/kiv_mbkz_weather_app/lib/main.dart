@@ -56,7 +56,7 @@ class App extends StatelessWidget {
                 create: (context) => WeatherBloc(
                   weatherRepository: weatherRepository,
                 ),
-                child: WeatherScreen(),
+                child: InitialScreen(),
               ),
               BlocProvider(
                 create: (context) => WeatherHistoryBloc(
@@ -64,7 +64,7 @@ class App extends StatelessWidget {
                     weatherRepository: weatherRepository),
               ),
             ],
-            child: WeatherScreen(),
+            child: InitialScreen(),
           ),
         );
       },
