@@ -6,6 +6,7 @@ import 'package:kiv_mbkz_weather_app/blocs/weather_bloc.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather_history_bloc.dart';
 import 'package:kiv_mbkz_weather_app/models/city.dart';
 import 'package:kiv_mbkz_weather_app/pages/weather_page.dart';
+import 'package:kiv_mbkz_weather_app/utils/formatting_utils.dart';
 
 class CityButton extends StatefulWidget {
   final City _city;
@@ -72,15 +73,7 @@ class _CityButtonState extends State<CityButton> with TickerProviderStateMixin {
                               curve: Curves.easeInOut,
                               vsync: this,
                               duration: Duration(milliseconds: 500),
-                              child: state is WeatherLoaded
-                                  ? Text(
-                                      state.weather[0].temp.toStringAsFixed(0) + "°C",
-                                      style: TextStyle().copyWith(color: Colors.white),
-                                    )
-                                  : SpinKitPulse(
-                                      color: Colors.white,
-                                      size: 14,
-                                    ),
+                              child: _buildButtonContent(state, context),
                             ),
                           )),
                     ],
@@ -92,5 +85,20 @@ class _CityButtonState extends State<CityButton> with TickerProviderStateMixin {
         ),
       )),
     );
+  }
+
+  Widget _buildButtonContent(WeatherState state, BuildContext context) {
+    if (state is WeatherLoaded) {
+      return BlocBuilder<SettingsBloc, SettingsState>(
+          builder: (context, settingsState) => Text(
+                formattedTemperatureText(state.weather[0].temp, settingsState.temperatureUnits),
+                style: TextStyle().copyWith(color: Colors.white),
+              ));
+    } else {
+      return SpinKitPulse(
+        color: Colors.white,
+        size: 14,
+      );
+    }
   }
 }

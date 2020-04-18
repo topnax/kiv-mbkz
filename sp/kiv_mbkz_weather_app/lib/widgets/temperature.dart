@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kiv_mbkz_weather_app/blocs/blocs.dart';
+import 'package:kiv_mbkz_weather_app/utils/formatting_utils.dart';
 
 class Temperature extends StatelessWidget {
   final double temperature;
@@ -22,7 +23,7 @@ class Temperature extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(right: 20.0),
           child: Text(
-            '${_formattedTemperature(temperature)} °C',
+            '${formattedTemperatureText(temperature, units)}',
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.w600,
@@ -33,7 +34,7 @@ class Temperature extends StatelessWidget {
         Column(
           children: [
             Text(
-              'max: ${_formattedTemperature(high)} °C',
+              'max: ${formattedTemperatureText(high, units)}',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w100,
@@ -41,7 +42,7 @@ class Temperature extends StatelessWidget {
               ),
             ),
             Text(
-              'min: ${_formattedTemperature(low)} °C',
+              'min: ${formattedTemperatureText(low, units)}',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w100,
@@ -53,8 +54,4 @@ class Temperature extends StatelessWidget {
       ],
     );
   }
-
-  int _toFahrenheit(double celsius) => ((celsius * 9 / 5) + 32).round();
-
-  int _formattedTemperature(double t) => units == TemperatureUnits.fahrenheit ? _toFahrenheit(t) : t.round();
 }

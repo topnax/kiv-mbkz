@@ -99,7 +99,6 @@ class WeatherHistoryBloc extends Bloc<WeatherHistoryEvent, WeatherHistoryState> 
     if (cities.length > 0) {
       yield WeatherHistoryLoaded(cities: cities);
     } else {
-      debugPrint("history is EMPTY");
       yield WeatherHistoryEmpty();
     }
   }

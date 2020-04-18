@@ -12,7 +12,7 @@ import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_reposi
 import 'package:kiv_mbkz_weather_app/repositories/weather/repositories.dart';
 import 'package:kiv_mbkz_weather_app/repositories/weather/weather_repository.dart';
 import 'package:kiv_mbkz_weather_app/simple_bloc_delegate.dart';
-import 'package:kiv_mbkz_weather_app/widgets/weather_screen.dart';
+import 'package:kiv_mbkz_weather_app/pages/initial_page.dart';
 
 void main() async {
   final WeatherRepository weatherRepository = WeatherRepository(
@@ -20,54 +20,58 @@ void main() async {
       httpClient: http.Client(),
     ),
   );
+  final PersistentStorageRepository persistentStorageRepository = PersistentStorageRepository(PreferencesClient());
+
   BlocSupervisor.delegate = SimpleBlocDelegate();
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<ThemeBloc>(
-          create: (context) => ThemeBloc(),
-        ),
         BlocProvider<SettingsBloc>(
-          create: (context) => SettingsBloc(),
+          create: (context) => SettingsBloc(persistentStorageRepository),
         ),
       ],
-      child: App(weatherRepository: weatherRepository),
+      child: App(
+        weatherRepository: weatherRepository,
+        persistentStorageRepository: persistentStorageRepository,
+      ),
     ),
   );
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   final WeatherRepository weatherRepository;
+  final PersistentStorageRepository persistentStorageRepository;
 
-  App({Key key, @required this.weatherRepository})
+  App({Key key, @required this.weatherRepository, @required this.persistentStorageRepository})
       : assert(weatherRepository != null),
+        assert(persistentStorageRepository != null),
         super(key: key);
 
   @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeBloc, ThemeState>(
-      builder: (context, themeState) {
-        return MaterialApp(
-          title: 'MBKZ Weather',
-          theme: themeState.theme,
-          home: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => WeatherBloc(
-                  weatherRepository: weatherRepository,
-                ),
-                child: InitialScreen(),
-              ),
-              BlocProvider(
-                create: (context) => WeatherHistoryBloc(
-                    persistentStorageRepository: PersistentStorageRepository(PreferencesClient()),
-                    weatherRepository: weatherRepository),
-              ),
-            ],
-            child: InitialScreen(),
+    return MaterialApp(
+      title: 'MBKZ Weather',
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => WeatherBloc(
+              weatherRepository: widget.weatherRepository,
+            ),
+            child: InitialPage(),
           ),
-        );
-      },
+          BlocProvider(
+            create: (context) => WeatherHistoryBloc(
+                persistentStorageRepository: widget.persistentStorageRepository,
+                weatherRepository: widget.weatherRepository),
+          ),
+        ],
+        child: InitialPage(),
+      ),
     );
   }
 }

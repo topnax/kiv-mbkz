@@ -16,16 +16,17 @@ import 'package:kiv_mbkz_weather_app/widgets/city_button.dart';
 import 'package:kiv_mbkz_weather_app/widgets/fade_in.dart';
 import 'package:kiv_mbkz_weather_app/widgets/widgets.dart';
 
-class InitialScreen extends StatefulWidget {
+class InitialPage extends StatefulWidget {
   @override
-  State<InitialScreen> createState() => _InitialScreenState();
+  State<InitialPage> createState() => _InitialPageState();
 }
 
-class _InitialScreenState extends State<InitialScreen> with TickerProviderStateMixin {
+class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin {
   bool initLoad = true;
 
   @override
   void initState() {
+    BlocProvider.of<SettingsBloc>(context).add(LoadTemperatureUnits());
     super.initState();
   }
 
@@ -36,9 +37,14 @@ class _InitialScreenState extends State<InitialScreen> with TickerProviderStateM
         child: BlocConsumer<WeatherBloc, WeatherState>(
           listener: (context, state) async {
             if (state is WeatherLoaded) {
+              // add loaded city to app persistent storage
               BlocProvider.of<WeatherHistoryBloc>(context)
                   .add(AddRecentlySearchedCity(city: City(state.weather[0].location, state.weather[0].locationId)));
+
+              // display weather page
               await Navigator.of(context).push(MaterialPageRoute(builder: (context) => WeatherPage(state.weather)));
+
+              // reset weather, removes loading screen
               BlocProvider.of<WeatherBloc>(context).add(ResetWeather());
             } else if (state is WeatherError) {
               Scaffold.of(context).showSnackBar(SnackBar(
@@ -251,7 +257,7 @@ class MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     return CityButton(city, key: Key(city.toString()));
   }
 
-  _openFilterRecordsDialog(context) async {
+  _openSettingsDialog(context) async {
     await showDialog(
       context: context,
       barrierDismissible: false,
@@ -307,7 +313,7 @@ class MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                 color: Colors.white,
                 size: 28,
               ),
-              onPressed: () => _openFilterRecordsDialog(context),
+              onPressed: () => _openSettingsDialog(context),
             ),
           ),
         ));

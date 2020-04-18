@@ -1,3 +1,4 @@
+import 'package:kiv_mbkz_weather_app/blocs/blocs.dart';
 import 'package:kiv_mbkz_weather_app/models/city.dart';
 import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_client.dart';
 
@@ -31,5 +32,13 @@ class PersistentStorageRepository {
     cities.remove(city);
     storage.putRecentlySearchedCities(cities);
     return Future.value(cities);
+  }
+
+  setTemperatureUnitsPreference(TemperatureUnits units) {
+    storage.putTemperatureUnitPreference(units);
+  }
+
+  Future<TemperatureUnits> getTemperatureUnitsPreference() async {
+    return storage.getTemperatureUnitPreference();
   }
 }
