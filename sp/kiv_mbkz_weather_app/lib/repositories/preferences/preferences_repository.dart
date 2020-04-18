@@ -1,3 +1,4 @@
+import 'package:kiv_mbkz_weather_app/models/city.dart';
 import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_client.dart';
 
 class PersistentStorageRepository {
@@ -7,21 +8,28 @@ class PersistentStorageRepository {
 
   PersistentStorageRepository(this.storage);
 
-  Future<List<String>> getRecentlySearchedCitiesNames() async {
-    return storage.getRecentlySearchedCitiesNames();
+  Future<List<City>> getRecentlySearchedCitiesNames() async {
+    return storage.getRecentlySearchedCities();
   }
 
-  addRecentlySearchedCity(String city) async {
-    var cities = await storage.getRecentlySearchedCitiesNames();
+  addRecentlySearchedCity(City city) async {
+    var cities = await storage.getRecentlySearchedCities();
     cities.removeWhere((n) => n == city);
     cities.insert(0, city);
     if (cities.length > MAX_RECENTLY_SEARCHED_CITIES_COUNT) {
       cities = cities.sublist(0, MAX_RECENTLY_SEARCHED_CITIES_COUNT);
     }
-    storage.putRecentlySearchedCitiesNames(cities);
+    storage.putRecentlySearchedCities(cities);
   }
 
   clearCityHistory() async {
     await storage.clearRecentlySearchedCitiesNames();
+  }
+
+  Future<List<City>> removeCityFromHistory(City city) async {
+    var cities = await storage.getRecentlySearchedCities();
+    cities.remove(city);
+    storage.putRecentlySearchedCities(cities);
+    return Future.value(cities);
   }
 }

@@ -19,6 +19,15 @@ class FetchWeather extends WeatherEvent {
   List<Object> get props => [city];
 }
 
+class FetchWeatherFromLocationId extends WeatherEvent {
+  final int locationId;
+
+  const FetchWeatherFromLocationId({@required this.locationId}) : assert(locationId != null);
+
+  @override
+  List<Object> get props => [locationId];
+}
+
 class ResetWeather extends WeatherEvent {
   @override
   List<Object> get props => [];
@@ -67,6 +76,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   Stream<WeatherState> mapEventToState(WeatherEvent event) async* {
     if (event is FetchWeather) {
       yield* _mapFetchWeatherToState(event);
+    } else if (event is FetchWeatherFromLocationId) {
+      yield* _mapFetchWeatherFromLocationIdToState(event);
     } else if (event is RefreshWeather) {
       yield* _mapRefreshWeatherToState(event);
     } else if (event is ResetWeather) {
@@ -91,6 +102,16 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   Stream<WeatherState> _mapRefreshWeatherToState(RefreshWeather event) async* {
     try {
       final List<Weather> weather = await weatherRepository.getWeather(event.city);
+      yield WeatherLoaded(weather: weather);
+    } catch (_) {
+      yield state;
+    }
+  }
+
+  Stream<WeatherState> _mapFetchWeatherFromLocationIdToState(FetchWeatherFromLocationId event) async* {
+    try {
+      yield WeatherLoading();
+      final List<Weather> weather = await weatherRepository.getWeatherByLocationId(event.locationId);
       yield WeatherLoaded(weather: weather);
     } catch (_) {
       yield state;

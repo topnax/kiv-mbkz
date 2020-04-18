@@ -8,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kiv_mbkz_weather_app/blocs/blocs.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather_background_bloc.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather_history_bloc.dart';
+import 'package:kiv_mbkz_weather_app/models/city.dart';
 import 'package:kiv_mbkz_weather_app/models/models.dart';
 import 'package:kiv_mbkz_weather_app/widgets/animated/animated_background.dart';
 import 'package:kiv_mbkz_weather_app/widgets/animated/animated_sun.dart';
@@ -44,7 +45,7 @@ class _WeatherScreenState extends State<WeatherScreen> with TickerProviderStateM
           listener: (context, state) {
             if (state is WeatherLoaded) {
               BlocProvider.of<WeatherHistoryBloc>(context)
-                  .add(AddRecentlySearchedCity(cityName: state.weather[0].location));
+                  .add(AddRecentlySearchedCity(city: City(state.weather[0].location, state.weather[0].locationId)));
               BlocProvider.of<ThemeBloc>(context).add(
                 WeatherChanged(condition: state.weather[0].condition),
               );
@@ -353,7 +354,7 @@ class InitialScreenWidget extends StatelessWidget {
                               child: ListView(
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
-                                children: state.cities.map((name) => _buildCityButton(name, context)).toList(),
+                                children: state.cities.map((city) => _buildCityButton(city, context)).toList(),
                               ),
                             ),
                           );
@@ -443,7 +444,7 @@ class InitialScreenWidget extends StatelessWidget {
     ]);
   }
 
-  Center _buildCityButton(String cityName, context) {
+  Center _buildCityButton(City city, context) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -452,15 +453,44 @@ class InitialScreenWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.0),
           child: InkWell(
             borderRadius: BorderRadius.circular(15.0),
-            onTap: () => BlocProvider.of<WeatherBloc>(context).add(FetchWeather(city: cityName)),
+            onTap: () => BlocProvider.of<WeatherBloc>(context).add(FetchWeatherFromLocationId(locationId: city.woeid)),
+            onLongPress: () => BlocProvider.of<WeatherHistoryBloc>(context).add(ClearRecentlySearchedCity(city)),
             child: Container(
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(15.0)),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Center(
-                    child: Text(cityName,
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 14))),
+                child: Row(
+                  children: <Widget>[
+                    Center(
+                        child: Text(city.name,
+                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 14))),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: BlocProvider(
+                          create: (context) =>
+                              WeatherBloc(weatherRepository: BlocProvider.of<WeatherBloc>(context).weatherRepository)
+                                ..add(FetchWeatherFromLocationId(locationId: city.woeid)),
+                          child: Builder(
+                            builder: (context) => AnimatedContainer(
+                              duration: Duration(seconds: 1),
+                              child: BlocBuilder<WeatherBloc, WeatherState>(
+                                builder: (BuildContext context, WeatherState state) {
+                                  if (state is WeatherLoaded) {
+                                    return Text(state.weather[0].temp.toStringAsFixed(0) + "°C");
+                                  } else {
+                                    return SpinKitPulse(
+                                      color: Colors.white,
+                                      size: 14,
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                          )),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

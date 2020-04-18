@@ -1,9 +1,10 @@
+import 'package:kiv_mbkz_weather_app/models/city.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class PersistentStorage {
-  Future<List<String>> getRecentlySearchedCitiesNames();
+  Future<List<City>> getRecentlySearchedCities();
 
-  putRecentlySearchedCitiesNames(List<String> names);
+  putRecentlySearchedCities(List<City> names);
 
   clearRecentlySearchedCitiesNames();
 }
@@ -11,15 +12,23 @@ abstract class PersistentStorage {
 class PreferencesClient implements PersistentStorage {
   static const RECENTLY_SEARCHED_CITIES_KEY = "RECENTLY_SEARCHED_CITIES_KEY";
 
-  Future<List<String>> getRecentlySearchedCitiesNames() async {
+  Future<List<City>> getRecentlySearchedCities() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var result = prefs.getStringList(RECENTLY_SEARCHED_CITIES_KEY) ?? List<String>();
-    return Future.value(result);
+    var storedCities = prefs.getStringList(RECENTLY_SEARCHED_CITIES_KEY) ?? List<String>();
+
+    var list = storedCities
+        .map((s) => s.split(City.SEPEARATOR))
+        .where((parts) => parts.length == 2 && (int.tryParse(parts[1]) ?? -1) != -1)
+        .map((parts) => City(parts[0], int.parse(parts[1])))
+        .toList();
+
+    return Future.value(list);
   }
 
-  putRecentlySearchedCitiesNames(List<String> names) async {
+  putRecentlySearchedCities(List<City> cities) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(RECENTLY_SEARCHED_CITIES_KEY, names);
+    var list = cities.map((city) => [city.name, city.woeid.toString()].join(City.SEPEARATOR)).toList();
+    prefs.setStringList(RECENTLY_SEARCHED_CITIES_KEY, list);
   }
 
   clearRecentlySearchedCitiesNames() async {
