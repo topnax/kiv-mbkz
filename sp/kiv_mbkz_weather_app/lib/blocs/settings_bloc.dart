@@ -30,7 +30,6 @@ class SettingsState extends Equatable {
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final PersistentStorageRepository _persistentStorageRepository;
-  TemperatureUnits _initialUnits;
 
   SettingsBloc(this._persistentStorageRepository);
 

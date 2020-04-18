@@ -172,10 +172,7 @@ class MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                     BlocBuilder(
                       bloc: BlocProvider.of<WeatherHistoryBloc>(context),
                       builder: (BuildContext context, state) {
-                        if (state is WeatherHistoryLoaded) {
-                          for (var city in state.cities) {
-                            debugPrint("got ${city.name}");
-                          }
+                        if (state is WeatherHistoryLoaded && state.cities.isNotEmpty) {
                           return Padding(
                             padding: const EdgeInsets.only(top: 24.0),
                             child: SizedBox(
@@ -261,41 +258,8 @@ class MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     await showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
-            title: Row(
-              children: [
-                Expanded(child: Text("Settings")),
-                IconButton(icon: Icon(Icons.close), onPressed: () => Navigator.of(context).pop())
-              ],
-            ),
-            content: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 7),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    BlocBuilder<SettingsBloc, SettingsState>(
-                      builder: (context, state) {
-                        return ListTile(
-                          title: Text(
-                            'Temperature Units',
-                          ),
-                          isThreeLine: true,
-                          subtitle: Text('Use metric measurements for temperature units.'),
-                          trailing: Switch(
-                            value: state.temperatureUnits == TemperatureUnits.celsius,
-                            onChanged: (_) => BlocProvider.of<SettingsBloc>(context).add(TemperatureUnitsToggled()),
-                          ),
-                        );
-                      },
-                    )
-                  ],
-                ),
-              ),
-            ));
+      builder: (BuildContext dcontext) {
+        return SettingsDialog(BlocProvider.of<WeatherHistoryBloc>(context));
       },
     );
   }
@@ -314,6 +278,62 @@ class MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                 size: 28,
               ),
               onPressed: () => _openSettingsDialog(context),
+            ),
+          ),
+        ));
+  }
+}
+
+class SettingsDialog extends StatelessWidget {
+  final WeatherHistoryBloc _weatherHistoryBloc;
+
+  const SettingsDialog(
+    this._weatherHistoryBloc, {
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+        title: Row(
+          children: [
+            Expanded(child: Text("Settings")),
+            IconButton(icon: Icon(Icons.close), onPressed: () => Navigator.of(context).pop())
+          ],
+        ),
+        content: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 7),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                BlocBuilder<SettingsBloc, SettingsState>(
+                  builder: (context, state) {
+                    return Column(children: [
+                      ListTile(
+                        title: Text(
+                          'Temperature Units',
+                        ),
+                        isThreeLine: true,
+                        subtitle: Text('Use metric measurements for temperature units.'),
+                        trailing: Switch(
+                          value: state.temperatureUnits == TemperatureUnits.celsius,
+                          onChanged: (_) => BlocProvider.of<SettingsBloc>(context).add(TemperatureUnitsToggled()),
+                        ),
+                      ),
+                      ListTile(
+                          onTap: () => _weatherHistoryBloc.add(ClearRecentlySearchedCities()),
+                          title: Text(
+                            'Reset recently searched cities',
+                          ),
+                          isThreeLine: true,
+                          subtitle: Text('Clears the history of recently searched cities'))
+                    ]);
+                  },
+                )
+              ],
             ),
           ),
         ));
