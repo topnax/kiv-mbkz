@@ -1,7 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiv_mbkz_weather_app/blocs/settings/bloc.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather_history/bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsDialog extends StatelessWidget {
   final WeatherHistoryBloc _weatherHistoryBloc;
@@ -48,7 +50,36 @@ class SettingsDialog extends StatelessWidget {
                             'Reset recently searched cities',
                           ),
                           isThreeLine: true,
-                          subtitle: Text('Clears the history of recently searched cities'))
+                          subtitle: Text('Clears the history of recently searched cities')),
+                      Center(
+                          child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(children: [
+                          TextSpan(
+                              text: "Free weather data supplied by ",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w300,
+                              )),
+                          TextSpan(
+                              recognizer: TapGestureRecognizer()..onTap = () => launch("https://www.metaweather.com/"),
+                              text: "https://www.metaweather.com/",
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w300,
+                              )),
+                        ]),
+                      )),
+                      Center(
+                          child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Icon(
+                          Icons.favorite,
+                          color: Colors.redAccent,
+                        ),
+                      )),
                     ]);
                   },
                 )

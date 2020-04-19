@@ -61,7 +61,6 @@ class _AppState extends State<App> {
             create: (context) => WeatherBloc(
               weatherRepository: widget.weatherRepository,
             ),
-            child: InitialPage(),
           ),
           BlocProvider(
             create: (context) => WeatherHistoryBloc(
