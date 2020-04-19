@@ -49,20 +49,20 @@ class MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
             key: _refreshIndicatorKey,
             onRefresh: () => _onRefresh(context),
             child: Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Align(
-                    alignment: Alignment.topCenter,
-                    child: FadeIn(
-                        initLoad ? 5 : 2,
-                        FractionallySizedBox(
-                            widthFactor: 0.4,
-                            child: AspectRatio(aspectRatio: 1, child: Image.asset("assets/flutter.png"))),
-                        initLoad)),
-                SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  child: Column(
+                child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Align(
+                      alignment: Alignment.topCenter,
+                      child: FadeIn(
+                          initLoad ? 5 : 2,
+                          FractionallySizedBox(
+                              widthFactor: 0.4,
+                              child: AspectRatio(aspectRatio: 1, child: Image.asset("assets/flutter.png"))),
+                          initLoad)),
+                  Column(
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(top: 45.0),
@@ -139,8 +139,8 @@ class MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       )
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             )),
           ),
           initLoad),

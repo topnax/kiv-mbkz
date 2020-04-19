@@ -101,8 +101,8 @@ class WeatherDetail extends StatelessWidget {
     );
   }
 
-  String _formatWindSpeed(double windSpeed, TemperatureUnits temperatureUnits) {
-    if (temperatureUnits == TemperatureUnits.fahrenheit) {
+  String _formatWindSpeed(double windSpeed, Units temperatureUnits) {
+    if (temperatureUnits == Units.imperial) {
       return "${(weather.windSpeed).round().toString()} mph";
     } else {
       return "${(weather.windSpeed * 1.609).round().toString()} km/h";

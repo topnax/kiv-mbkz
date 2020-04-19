@@ -6,7 +6,7 @@ class Temperature extends StatelessWidget {
   final double temperature;
   final double low;
   final double high;
-  final TemperatureUnits units;
+  final Units units;
 
   Temperature({
     Key key,

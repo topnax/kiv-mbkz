@@ -38,7 +38,7 @@ class SettingsDialog extends StatelessWidget {
                         isThreeLine: true,
                         subtitle: Text('Use metric units throughout the application.'),
                         trailing: Switch(
-                          value: state.temperatureUnits == TemperatureUnits.celsius,
+                          value: state.temperatureUnits == Units.metric,
                           onChanged: (_) => BlocProvider.of<SettingsBloc>(context).add(UnitsToggled()),
                         ),
                       ),

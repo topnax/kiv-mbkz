@@ -9,14 +9,14 @@ abstract class PersistentStorage {
 
   clearRecentlySearchedCitiesNames();
 
-  putTemperatureUnitPreference(TemperatureUnits units);
+  putUnitsPreference(Units units);
 
-  Future<TemperatureUnits> getTemperatureUnitPreference();
+  Future<Units> getUnitsPreference();
 }
 
 class PreferencesClient implements PersistentStorage {
   static const RECENTLY_SEARCHED_CITIES_KEY = "RECENTLY_SEARCHED_CITIES_KEY";
-  static const TEMPERATURE_UNIT_KEY = "TEMPERATURE_UNIT_KEY";
+  static const UNITS_PREFERENCE_KEY = "UNITS_PREFERENCE_KEY";
 
   Future<List<City>> getRecentlySearchedCities() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -43,20 +43,18 @@ class PreferencesClient implements PersistentStorage {
   }
 
   @override
-  Future<TemperatureUnits> getTemperatureUnitPreference() async {
+  Future<Units> getUnitsPreference() async {
     var prefs = await SharedPreferences.getInstance();
 
-    var temperatureUnitString = prefs.getString(TEMPERATURE_UNIT_KEY);
+    var unitsString = prefs.getString(UNITS_PREFERENCE_KEY);
 
-    return temperatureUnitString == TemperatureUnits.celsius.toString()
-        ? TemperatureUnits.celsius
-        : TemperatureUnits.fahrenheit;
+    return unitsString == Units.imperial.toString() ? Units.imperial : Units.metric;
   }
 
   @override
-  putTemperatureUnitPreference(TemperatureUnits units) async {
+  putUnitsPreference(Units units) async {
     var prefs = await SharedPreferences.getInstance();
 
-    prefs.setString(TEMPERATURE_UNIT_KEY, units.toString());
+    prefs.setString(UNITS_PREFERENCE_KEY, units.toString());
   }
 }

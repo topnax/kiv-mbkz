@@ -34,11 +34,11 @@ class PersistentStorageRepository {
     return Future.value(cities);
   }
 
-  setTemperatureUnitsPreference(TemperatureUnits units) {
-    storage.putTemperatureUnitPreference(units);
+  setUnitsPreference(Units units) {
+    storage.putUnitsPreference(units);
   }
 
-  Future<TemperatureUnits> getTemperatureUnitsPreference() async {
-    return storage.getTemperatureUnitPreference();
+  Future<Units> getUnitsPreference() async {
+    return storage.getUnitsPreference();
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:kiv_mbkz_weather_app/blocs/settings/settings_bloc.dart';
 
 class SettingsState extends Equatable {
-  final TemperatureUnits temperatureUnits;
+  final Units temperatureUnits;
 
   const SettingsState({@required this.temperatureUnits}) : assert(temperatureUnits != null);
 
