@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiv_mbkz_weather_app/blocs/settings_bloc.dart';
-import 'package:kiv_mbkz_weather_app/blocs/theme_bloc.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather_bloc.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather_history_bloc.dart';
 import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_client.dart';

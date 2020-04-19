@@ -39,12 +39,15 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   @override
   Stream<SettingsState> mapEventToState(SettingsEvent event) async* {
     if (event is TemperatureUnitsToggled) {
+      // toggle temperature units preference
       yield SettingsState(
         temperatureUnits:
             state.temperatureUnits == TemperatureUnits.celsius ? TemperatureUnits.fahrenheit : TemperatureUnits.celsius,
       );
+      // store it in the persistent storage
       _persistentStorageRepository.setTemperatureUnitsPreference(state.temperatureUnits);
     } else if (event is LoadTemperatureUnits) {
+      // load preference from the persistent storage
       yield SettingsState(
         temperatureUnits: await _persistentStorageRepository.getTemperatureUnitsPreference(),
       );
