@@ -1,0 +1,4 @@
+\babel@toc {czech}{}
+\contentsline {section}{\numberline {1}Anal\IeC {\'y}za}{2}{section.1}% 
+\contentsline {subsection}{\numberline {1.1}V\IeC {\'y}voj multiplatformn\IeC {\'\i }ch aplikaci pomoc\IeC {\'\i } frameworku Flutter}{2}{subsection.1.1}% 
+\contentsline {section}{\numberline {2}Z\IeC {\'a}v\IeC {\v e}r}{4}{section.2}% 

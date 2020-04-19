@@ -1,0 +1,147 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[czech]{babel}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[final]{pdfpages}
+\usepackage{tabularx}
+
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\usetikzlibrary{shapes,positioning,matrix,arrows}
+
+\newcommand{\img}[1]{(viz obr. \ref{#1})}
+
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+
+\lstset{frame=tb,
+  language=C,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\lstset{language=Java,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  commentstyle=\color{pgreen},
+  keywordstyle=\color{pblue},
+  stringstyle=\color{pred},
+  basicstyle=\ttfamily,
+  moredelim=[il][\textcolor{pgrey}]{$$},
+  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+}
+
+\let\oldsection\section
+\renewcommand\section{\clearpage\oldsection}
+
+\begin{document}
+	% this has to be placed here, after document has been created
+	% \counterwithout{lstlisting}{chapter}
+	\renewcommand{\lstlistingname}{Ukázka zprávy}
+	\renewcommand{\lstlistlistingname}{Seznam ukázek}
+    \begin{titlepage}
+
+       \centering
+
+       \vspace*{\baselineskip}
+
+       \begin{figure}[H]
+          \centering
+          \includegraphics[width=7cm]{img/fav-logo.jpg}
+       \end{figure}
+
+       \vspace*{1\baselineskip}
+       {\sc Semestrální práce z předmětu KIV/MBKZ}
+       \vspace*{1\baselineskip}
+
+       \vspace{0.75\baselineskip}
+
+       {\LARGE\sc Multiplatformní aplikace zobrazující předpověď počasí\\}
+
+       \vspace{4\baselineskip}
+       
+		\vspace{0.5\baselineskip}
+
+       
+       {\sc\Large Stanislav Král \\}
+
+       \vspace{0.5\baselineskip}
+
+       {A17B0260P}
+
+       \vfill
+
+       {\sc Západočeská univerzita v Plzni\\
+       Fakulta aplikovaných věd}
+
+
+    \end{titlepage}
+
+
+    \tableofcontents
+    \pagebreak
+
+
+   \section{Analýza}
+
+	\subsection{Vývoj multiplatformních aplikaci pomocí frameworku Flutter}
+Flutter je open-source framework na jehož vývoji se podílí převážně firma Google. Cílem Flutteru je nabídnout vývojářům možnost vyvíjet výkonné aplikace, které působí nativně na všech platformách. Flutter umožňuje sdílet veškerý kód mezi všemi platformami. Toho je docíleno tak, že knihovna nepoužívá žádné nativní komponenty uživatelského rozhraní dané platformy. Okno aplikace totiž pouze slouží jako plátno a~všechny komponenty si Flutter vykresluje sám. K~vykreslování používá open-source knihovnu Skia, která je napsaná v~jazyce C++, čímž dosahuje plynulosti ve zobrazování uživatelského rozhraní. Pro psaní Flutter aplikací se používá programovací jazyk Dart.
+
+Flutter respektuje rozdíly v~chování uživatelských rozhraní mezi mobilními operačními systémy čímž pomáhá aplikacím psaným v~tomto frameworku působit tak, jako kdyby byly nativní a~cílené právě pro danou platformu. Mezi hlavní rozdíly mezi platformami, jež tato knihovna implementuje na jednotlivých platformách zvlášt, patří například \textbf{scrollování}, ikony nebo typografie.
+
+Při nasazení na Android platformu je C a~C++ kód enginu je kompilován pomocí Android NDK, zatímco Dart kód se s~využitím kompilace typu ahead-of-time kompiluje do nativních ARM a~x86 knihoven. Tyto knihovny jsou poté použity ve vygenerované nativní Android aplikaci, která slouží jako hostitel, a~z~celého projektu je následně vytvořen APK balík. Při vyvíjení Flutter aplikace je použit virtuální stroj, který umožňuje upravovat zdrojový kód aplikace bez nutnosti ji restartovat. Tato funkcionalita má největší význam při tvorbě uživatelského rozhraní, kdy se jednotlivé změny v~designu aplikace ihned projeví na zařízení. Podobně probíhá i~nasazení aplikace na iOS platformu, kdy kód enginu je překládán pomocí LLVM. Kompilace do nativních knihoven znamená, že narozdíl od ostatních frameworků pro tvorbu multiplatformních aplikací, jsou Flutter aplikace zcela nativní.
+
+\begin{figure}[!ht]
+\centering
+{\includegraphics[width=13.5cm]{img/flutter-architecture.png}}
+\caption{Diagram architektury Flutter}
+\label{fig:flutter-architecture}
+\end{figure}
+
+Prvky uživatelského rozhraní, které Flutter nabízí, se snaží co nejvěrněji napodobit ty nativní. Prvky napodobující prvky platformy Android se nachází v~balíku \texttt{Material} a~prvky platformy iOS v~balíku \texttt{Cupertino}. Tým vývojářů Flutteru bere ohledy na aktualizace mobilních operačních systémů a~změny v~uživatelských rozhraní včasně implementuje do svého frameworku.
+
+Flutter dále umožňuje psát nativní kód specifický pro danou platformu pomocí konstrukce zvané \texttt{platform channel}, která funguje na principu asynchronního předávání zpráv. Část Flutter aplikace pošle hostitelské nativní aplikaci zprávu, která asynchronně na tuto zprávu odpoví. Toto umožňuje přístup k~nativnímu API dané platformy.
+
+Na konci roku 2019, v~každoročním shrnutí služby GitHub, je programovací jazyk Dart, který se v~dnešní době používá nejvíce právě ve Flutter aplikacích, označen jako jazyk s~nejrychleji rostoucím počtem vývojářů, jež ho používají pro vývoj aplikací \cite{the_state_of_the_octoverse_2019}.
+
+        \section{Závěr}
+    V rámci této semestrální práce byl vytvořena dvojice programů - server a klient napodující deskovou hru Kris Kros. Důkladný a pečlivý návrh protokolu se osvědčil a v průběhu vývoje neprošel žádnými změnami. Avšak co se několikrát měnilo, byl způsob čtení zpráv, kdy nakonec jsou zprávy čteny spolehlivým automatem. Pokud bych automat navrhl hned na začátku, mohl jsem si ušetřit spoustu času laděním a upravováním parseru zpráv. Aplikace i server jsou však nyní funkční a hra je hratelná. Pokud je spojení s některým hráčem dočasně nedostupné nebo je klient násilně vypnut, tak po autorizaci je hráčovo stav korektně obnoven.
+    
+
+
+%obrazek
+%\begin{figure}[!ht]
+%\centering
+%{\includegraphics[width=12cm]{img/poly-example.jpeg}}
+%\caption{Zjednodušené UML aplikace (pouze balíčky)}
+%\label{fig:photo}
+%\end{figure}
+
+	
+	
+
+\end{document}    
