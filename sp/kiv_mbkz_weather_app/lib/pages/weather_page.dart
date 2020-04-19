@@ -1,22 +1,20 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kiv_mbkz_weather_app/blocs/weather/bloc.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather_background/bloc.dart';
 import 'package:kiv_mbkz_weather_app/models/weather.dart';
 import 'package:kiv_mbkz_weather_app/widgets/animated/animated_background.dart';
-import 'package:kiv_mbkz_weather_app/widgets/animated/animated_rain.dart';
 import 'package:kiv_mbkz_weather_app/widgets/animated/animated_sun.dart';
-import 'package:kiv_mbkz_weather_app/widgets/bottom_positioned.dart';
-import 'package:kiv_mbkz_weather_app/widgets/combined_weather_temperature.dart';
-import 'package:kiv_mbkz_weather_app/widgets/last_updated.dart';
+import 'package:kiv_mbkz_weather_app/widgets/animated/animated_wave.dart';
+import 'package:kiv_mbkz_weather_app/widgets/date_label.dart';
 import 'package:kiv_mbkz_weather_app/widgets/location.dart';
 import 'package:kiv_mbkz_weather_app/widgets/particles/clouds.dart';
 import 'package:kiv_mbkz_weather_app/widgets/particles/rain.dart';
 import 'package:kiv_mbkz_weather_app/widgets/particles/snow.dart';
+import 'package:kiv_mbkz_weather_app/widgets/utils/bottom_positioned.dart';
+import 'package:kiv_mbkz_weather_app/widgets/weather/weather_detail.dart';
 import 'package:kiv_mbkz_weather_app/widgets/widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -32,7 +30,6 @@ class WeatherPage extends StatefulWidget {
 class WeatherPageState extends State<WeatherPage> {
   final List<Weather> weatherList;
   PageController _controller = PageController();
-  Completer<void> _refreshCompleter = Completer<void>();
 
   WeatherPageState(this.weatherList);
 
@@ -128,31 +125,23 @@ class WeatherPageState extends State<WeatherPage> {
                         controller: _controller,
                         children: [
                           for (var i = 0; i < weatherList.length; i++)
-                            RefreshIndicator(
-                              onRefresh: () {
-                                BlocProvider.of<WeatherBloc>(context).add(
-                                  RefreshWeather(city: weatherList[i].location),
-                                );
-                                return _refreshCompleter.future;
-                              },
-                              child: ListView(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Center(
-                                      child: LastUpdated(dateTime: weatherList[i].applicableDate, wIndex: i),
+                            ListView(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Center(
+                                    child: DateLabel(dateTime: weatherList[i].applicableDate, wIndex: i),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 50.0),
+                                  child: Center(
+                                    child: WeatherDetail(
+                                      weather: weatherList[i],
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 50.0),
-                                    child: Center(
-                                      child: CombinedWeatherTemperature(
-                                        weather: weatherList[i],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             )
                         ],
                       ),

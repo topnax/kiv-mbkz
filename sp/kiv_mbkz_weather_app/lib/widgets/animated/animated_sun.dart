@@ -46,7 +46,7 @@ class SunPainter extends CustomPainter {
     final white = Paint()..color = Colors.white.withAlpha(80);
     var radius = 50.0;
     var x = 100;
-    var offset = Offset(((size.width + x)  * (value / (pi))) - (x /2), (size.height * 0.2) - (sin(value) * 70));
+    var offset = Offset(((size.width + x) * (value / (pi))) - (x / 2), (size.height * 0.2) - (sin(value) * 70));
     canvas.drawCircle(offset, radius, white);
 
     var count = 15;
@@ -57,13 +57,12 @@ class SunPainter extends CustomPainter {
     var max = half * 2;
     var curr = value % max;
 
-
     double opacity = (80 * (value % half) / half);
     if (curr > half) {
       opacity = 80 - opacity;
     }
 
-    final shinepaint = Paint()..color = Colors.white.withAlpha(opacity.round());
+    final shinePaint = Paint()..color = Colors.white.withAlpha(opacity.round());
 
     for (var i = 0; i < count; i++) {
       canvas.save();
@@ -72,7 +71,7 @@ class SunPainter extends CustomPainter {
       canvas.translate(radius * 1.2, 0);
       canvas.drawRRect(
           RRect.fromRectAndRadius(Rect.fromCenter(center: Offset(5, 0), width: 20, height: 5), Radius.circular(5)),
-          shinepaint);
+          shinePaint);
       canvas.restore();
     }
   }

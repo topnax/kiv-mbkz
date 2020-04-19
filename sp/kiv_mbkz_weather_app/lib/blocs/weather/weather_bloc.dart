@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather/weather_events.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather/weather_states.dart';
 import 'package:kiv_mbkz_weather_app/models/models.dart';
@@ -21,8 +23,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       yield* _mapFetchWeatherToState(event);
     } else if (event is FetchWeatherFromLocationId) {
       yield* _mapFetchWeatherFromLocationIdToState(event);
-    } else if (event is RefreshWeather) {
-      yield* _mapRefreshWeatherToState(event);
     } else if (event is ResetWeather) {
       yield WeatherEmpty();
     }
@@ -35,19 +35,9 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         final List<Weather> weather = await weatherRepository.getWeather(event.city);
         yield WeatherLoaded(weather: weather);
       } catch (e, s) {
-        print("caught $e");
-        print("at $s");
-        yield WeatherError();
+        debugPrint(s.toString());
+        yield* _throwWeatherError(e);
       }
-    }
-  }
-
-  Stream<WeatherState> _mapRefreshWeatherToState(RefreshWeather event) async* {
-    try {
-      final List<Weather> weather = await weatherRepository.getWeather(event.city);
-      yield WeatherLoaded(weather: weather);
-    } catch (_) {
-      yield state;
     }
   }
 
@@ -56,8 +46,20 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       yield WeatherLoading();
       final List<Weather> weather = await weatherRepository.getWeatherByLocationId(event.locationId);
       yield WeatherLoaded(weather: weather);
-    } catch (_) {
-      yield state;
+    } catch (e, s) {
+      debugPrint(s.toString());
+      yield* _throwWeatherError(e);
+    }
+  }
+
+  Stream<WeatherState> _throwWeatherError(e) async* {
+    debugPrint("caught $e");
+    if (e is SocketException) {
+      yield WeatherError("Network is not available");
+    } else if (e is WeatherNotFoundException) {
+      yield WeatherError("Cannot find weather for such location");
+    } else {
+      yield WeatherError("Unknown error");
     }
   }
 }

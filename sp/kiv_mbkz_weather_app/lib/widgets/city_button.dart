@@ -16,9 +16,7 @@ class CityButton extends StatefulWidget {
   CityButton(
     this._city, {
     Key key,
-  }) : super(key: key) {
-    debugPrint("const ${_city.name}");
-  }
+  }) : super(key: key);
 
   @override
   _CityButtonState createState() => _CityButtonState(_city);
@@ -31,10 +29,9 @@ class _CityButtonState extends State<CityButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("built: ${_city.name}");
     return BlocProvider(
       create: (context) => WeatherBloc(weatherRepository: BlocProvider.of<WeatherBloc>(context).weatherRepository)
-        ..add(FetchWeatherFromLocationId(locationId: widget._city.woeid)),
+        ..add(FetchWeatherFromLocationId(locationId: _city.woeid)),
       child: Center(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -46,14 +43,11 @@ class _CityButtonState extends State<CityButton> with TickerProviderStateMixin {
               borderRadius: BorderRadius.circular(15.0),
               onTap: () {
                 if (state is WeatherLoaded) {
-                  debugPrint("clicked: " + _city.name);
-//                  BlocProvider.of<WeatherBloc>(context).add(FetchWeatherFromLocationId(locationId: city.woeid));
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => WeatherPage(state.weather)));
                   FocusScope.of(context).unfocus();
                 }
               },
-              onLongPress: () =>
-                  BlocProvider.of<WeatherHistoryBloc>(context).add(ClearRecentlySearchedCity(widget._city)),
+              onLongPress: () => BlocProvider.of<WeatherHistoryBloc>(context).add(ClearRecentlySearchedCity(_city)),
               child: Container(
                 decoration:
                     BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(15.0)),
@@ -62,7 +56,7 @@ class _CityButtonState extends State<CityButton> with TickerProviderStateMixin {
                   child: Row(
                     children: <Widget>[
                       Center(
-                          child: Text(widget._city.name,
+                          child: Text(_city.name,
                               style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 14))),
                       Padding(
                           padding: const EdgeInsets.only(left: 8.0),
@@ -92,7 +86,14 @@ class _CityButtonState extends State<CityButton> with TickerProviderStateMixin {
                 formattedTemperatureText(state.weather[0].temp, settingsState.temperatureUnits),
                 style: TextStyle().copyWith(color: Colors.white),
               ));
+    } else if (state is WeatherError) {
+      return Icon(
+        Icons.warning,
+        color: Colors.white,
+        size: 18,
+      );
     } else {
+      debugPrint("state is ${state.toString()}");
       return SpinKitPulse(
         color: Colors.white,
         size: 14,

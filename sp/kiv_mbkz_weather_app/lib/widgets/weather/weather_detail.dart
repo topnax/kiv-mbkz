@@ -8,10 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiv_mbkz_weather_app/models/models.dart' as model;
 import 'package:kiv_mbkz_weather_app/widgets/widgets.dart';
 
-class CombinedWeatherTemperature extends StatelessWidget {
+class WeatherDetail extends StatelessWidget {
   final model.Weather weather;
 
-  CombinedWeatherTemperature({
+  WeatherDetail({
     Key key,
     @required this.weather,
   })  : assert(weather != null),

@@ -15,13 +15,13 @@ class WeatherApiClient {
     final locationUrl = '$baseUrl/api/location/search/?query=$city';
     final locationResponse = await this.httpClient.get(locationUrl);
     if (locationResponse.statusCode != 200) {
-      throw Exception('error getting locationId for city');
+      throw Exception('Network not available');
     }
 
     final locationJson = jsonDecode(locationResponse.body) as List;
 
     if (locationJson.length == 0) {
-      throw Exception('empty');
+      throw WeatherNotFoundException();
     }
     return (locationJson.first)['woeid'];
   }
@@ -31,10 +31,12 @@ class WeatherApiClient {
     final weatherResponse = await this.httpClient.get(weatherUrl);
 
     if (weatherResponse.statusCode != 200) {
-      throw Exception('error getting weather for location');
+      throw Exception('Network not available');
     }
 
     final weatherJson = jsonDecode(weatherResponse.body);
     return Weather.fromJson(weatherJson);
   }
 }
+
+class WeatherNotFoundException implements Exception {}

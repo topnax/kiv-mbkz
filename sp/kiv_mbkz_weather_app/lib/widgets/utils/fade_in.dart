@@ -10,7 +10,6 @@ class FadeIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("this is enable " + enable.toString());
     if (!enable) {
       return child;
     }

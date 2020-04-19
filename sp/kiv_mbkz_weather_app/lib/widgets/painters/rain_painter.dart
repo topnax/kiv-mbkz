@@ -15,7 +15,6 @@ class RainPainter extends CustomPainter {
       var progress = particle.animationProgress.progress(time);
       final animation = particle.tween.transform(progress);
       final position = Offset(animation["x"] * size.width, animation["y"] * size.height);
-//      canvas.drawCircle(position, size.width * 0.2 * particle.size, paint);
       canvas.drawRRect(
           RRect.fromLTRBR(position.dx, position.dy, position.dx + 2, position.dy + 50, Radius.circular(5)), paint);
     });
