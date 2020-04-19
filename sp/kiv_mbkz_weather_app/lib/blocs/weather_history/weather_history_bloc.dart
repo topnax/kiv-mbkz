@@ -1,62 +1,13 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:kiv_mbkz_weather_app/blocs/weather_history/weather_history_events.dart';
+import 'package:kiv_mbkz_weather_app/blocs/weather_history/weather_history_states.dart';
 import 'package:kiv_mbkz_weather_app/models/city.dart';
 import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_repository.dart';
 import 'package:kiv_mbkz_weather_app/repositories/weather/repositories.dart';
 import 'package:meta/meta.dart';
-
-abstract class WeatherHistoryEvent extends Equatable {
-  const WeatherHistoryEvent();
-}
-
-class AddRecentlySearchedCity extends WeatherHistoryEvent {
-  final City city;
-
-  const AddRecentlySearchedCity({@required this.city}) : assert(city != null);
-
-  @override
-  List<Object> get props => [city];
-}
-
-class LoadRecentlySearchedCities extends WeatherHistoryEvent {
-  @override
-  List<Object> get props => [];
-}
-
-class ClearRecentlySearchedCities extends WeatherHistoryEvent {
-  @override
-  List<Object> get props => [];
-}
-
-class ClearRecentlySearchedCity extends WeatherHistoryEvent {
-  final City city;
-
-  ClearRecentlySearchedCity(this.city);
-
-  @override
-  List<Object> get props => [city];
-}
-
-abstract class WeatherHistoryState extends Equatable {
-  const WeatherHistoryState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class WeatherHistoryEmpty extends WeatherHistoryState {}
-
-class WeatherHistoryLoaded extends WeatherHistoryState {
-  final List<City> cities;
-
-  const WeatherHistoryLoaded({@required this.cities}) : assert(cities != null);
-
-  @override
-  List<Object> get props => [cities];
-}
 
 class WeatherHistoryBloc extends Bloc<WeatherHistoryEvent, WeatherHistoryState> {
   final PersistentStorageRepository persistentStorageRepository;

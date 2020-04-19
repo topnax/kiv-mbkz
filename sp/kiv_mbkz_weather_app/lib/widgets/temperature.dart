@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kiv_mbkz_weather_app/blocs/blocs.dart';
+import 'package:kiv_mbkz_weather_app/blocs/settings/settings_bloc.dart';
 import 'package:kiv_mbkz_weather_app/utils/formatting_utils.dart';
 
 class Temperature extends StatelessWidget {

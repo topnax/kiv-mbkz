@@ -1,4 +1,4 @@
-import 'package:kiv_mbkz_weather_app/blocs/blocs.dart';
+import 'package:kiv_mbkz_weather_app/blocs/settings/settings_bloc.dart';
 import 'package:kiv_mbkz_weather_app/models/city.dart';
 import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_client.dart';
 

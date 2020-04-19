@@ -1,32 +1,11 @@
 import 'dart:async';
 
-import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_repository.dart';
-import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-
-abstract class SettingsEvent extends Equatable {}
-
-class TemperatureUnitsToggled extends SettingsEvent {
-  @override
-  List<Object> get props => [];
-}
-
-class LoadTemperatureUnits extends SettingsEvent {
-  @override
-  List<Object> get props => [];
-}
+import 'package:kiv_mbkz_weather_app/blocs/settings/settings_events.dart';
+import 'package:kiv_mbkz_weather_app/blocs/settings/settings_states.dart';
+import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_repository.dart';
 
 enum TemperatureUnits { fahrenheit, celsius }
-
-class SettingsState extends Equatable {
-  final TemperatureUnits temperatureUnits;
-
-  const SettingsState({@required this.temperatureUnits}) : assert(temperatureUnits != null);
-
-  @override
-  List<Object> get props => [temperatureUnits];
-}
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final PersistentStorageRepository _persistentStorageRepository;

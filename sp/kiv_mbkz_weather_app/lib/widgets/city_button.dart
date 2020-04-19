@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:kiv_mbkz_weather_app/blocs/settings_bloc.dart';
-import 'package:kiv_mbkz_weather_app/blocs/weather_bloc.dart';
-import 'package:kiv_mbkz_weather_app/blocs/weather_history_bloc.dart';
+import 'package:kiv_mbkz_weather_app/blocs/settings/bloc.dart';
+import 'package:kiv_mbkz_weather_app/blocs/settings/settings_bloc.dart';
+import 'package:kiv_mbkz_weather_app/blocs/weather/bloc.dart';
+import 'package:kiv_mbkz_weather_app/blocs/weather_history/bloc.dart';
+import 'package:kiv_mbkz_weather_app/blocs/weather_history/weather_history_bloc.dart';
 import 'package:kiv_mbkz_weather_app/models/city.dart';
 import 'package:kiv_mbkz_weather_app/pages/weather_page.dart';
 import 'package:kiv_mbkz_weather_app/utils/formatting_utils.dart';
 
 class CityButton extends StatefulWidget {
   final City _city;
+
   CityButton(
     this._city, {
     Key key,
@@ -25,11 +28,6 @@ class _CityButtonState extends State<CityButton> with TickerProviderStateMixin {
   final City _city;
 
   _CityButtonState(this._city);
-
-  @override
-  void didUpdateWidget(CityButton oldWidget) {
-    debugPrint("old ${oldWidget._city.name} - ${_city.name}");
-  }
 
   @override
   Widget build(BuildContext context) {

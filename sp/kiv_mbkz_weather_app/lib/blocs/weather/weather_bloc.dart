@@ -1,68 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:kiv_mbkz_weather_app/blocs/weather/weather_events.dart';
+import 'package:kiv_mbkz_weather_app/blocs/weather/weather_states.dart';
 import 'package:kiv_mbkz_weather_app/models/models.dart';
 import 'package:kiv_mbkz_weather_app/repositories/weather/repositories.dart';
 import 'package:meta/meta.dart';
-
-abstract class WeatherEvent extends Equatable {
-  const WeatherEvent();
-}
-
-class FetchWeather extends WeatherEvent {
-  final String city;
-
-  const FetchWeather({@required this.city}) : assert(city != null);
-
-  @override
-  List<Object> get props => [city];
-}
-
-class FetchWeatherFromLocationId extends WeatherEvent {
-  final int locationId;
-
-  const FetchWeatherFromLocationId({@required this.locationId}) : assert(locationId != null);
-
-  @override
-  List<Object> get props => [locationId];
-}
-
-class ResetWeather extends WeatherEvent {
-  @override
-  List<Object> get props => [];
-}
-
-class RefreshWeather extends WeatherEvent {
-  final String city;
-
-  const RefreshWeather({@required this.city}) : assert(city != null);
-
-  @override
-  List<Object> get props => [city];
-}
-
-abstract class WeatherState extends Equatable {
-  const WeatherState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class WeatherEmpty extends WeatherState {}
-
-class WeatherLoading extends WeatherState {}
-
-class WeatherLoaded extends WeatherState {
-  final List<Weather> weather;
-
-  const WeatherLoaded({@required this.weather}) : assert(weather != null);
-
-  @override
-  List<Object> get props => [weather];
-}
-
-class WeatherError extends WeatherState {}
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final WeatherRepository weatherRepository;

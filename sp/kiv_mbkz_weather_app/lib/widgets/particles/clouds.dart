@@ -2,15 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:kiv_mbkz_weather_app/physics/cloud_model.dart';
-import 'package:kiv_mbkz_weather_app/physics/snow_model.dart';
 import 'package:kiv_mbkz_weather_app/widgets/painters/clouds_painter.dart';
-import 'package:kiv_mbkz_weather_app/widgets/painters/snow_painter.dart';
 import 'package:simple_animations/simple_animations/rendering.dart';
 
 class Clouds extends StatefulWidget {
   final int numberOfParticles;
   final bool thunder;
-
 
   Clouds(this.numberOfParticles, {this.thunder = false});
 
@@ -21,7 +18,6 @@ class Clouds extends StatefulWidget {
 class _CloudsState extends State<Clouds> {
   final Random random = Random();
   final bool thunder;
-
 
   _CloudsState({this.thunder = false});
 
@@ -62,8 +58,4 @@ class _CloudsState extends State<Clouds> {
 //    }
 //  }
 
-
-
-
 }
-

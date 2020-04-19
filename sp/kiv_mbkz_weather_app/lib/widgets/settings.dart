@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:kiv_mbkz_weather_app/blocs/blocs.dart';
+import 'package:kiv_mbkz_weather_app/blocs/settings/bloc.dart';
 
 class Settings extends StatelessWidget {
   @override
@@ -18,12 +16,10 @@ class Settings extends StatelessWidget {
                   'Temperature Units',
                 ),
                 isThreeLine: true,
-                subtitle:
-                    Text('Use metric measurements for temperature units.'),
+                subtitle: Text('Use metric measurements for temperature units.'),
                 trailing: Switch(
                   value: state.temperatureUnits == TemperatureUnits.celsius,
-                  onChanged: (_) => BlocProvider.of<SettingsBloc>(context)
-                      .add(TemperatureUnitsToggled()),
+                  onChanged: (_) => BlocProvider.of<SettingsBloc>(context).add(TemperatureUnitsToggled()),
                 ),
               );
             },

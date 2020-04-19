@@ -2,9 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:kiv_mbkz_weather_app/physics/rain_model.dart';
-import 'package:kiv_mbkz_weather_app/physics/snow_model.dart';
 import 'package:kiv_mbkz_weather_app/widgets/painters/rain_painter.dart';
-import 'package:kiv_mbkz_weather_app/widgets/painters/snow_painter.dart';
 import 'package:simple_animations/simple_animations/rendering.dart';
 
 class Rain extends StatefulWidget {
@@ -48,4 +46,3 @@ class _RainState extends State<Rain> {
     particles.forEach((particle) => particle.maintainRestart(time));
   }
 }
-

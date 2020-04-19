@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kiv_mbkz_weather_app/blocs/blocs.dart';
-import 'package:kiv_mbkz_weather_app/blocs/weather_history_bloc.dart';
+import 'package:kiv_mbkz_weather_app/blocs/weather/bloc.dart';
+import 'package:kiv_mbkz_weather_app/blocs/weather_history/bloc.dart';
+import 'package:kiv_mbkz_weather_app/blocs/weather_history/weather_history_bloc.dart';
 import 'package:kiv_mbkz_weather_app/pages/initial_page.dart';
 import 'package:kiv_mbkz_weather_app/widgets/animated/animated_background.dart';
 import 'package:kiv_mbkz_weather_app/widgets/animated/animated_rain.dart';
@@ -159,7 +160,7 @@ class MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     await showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext dcontext) {
+      builder: (BuildContext dContext) {
         return SettingsDialog(BlocProvider.of<WeatherHistoryBloc>(context));
       },
     );

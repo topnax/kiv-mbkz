@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kiv_mbkz_weather_app/physics/rain_model.dart';
-import 'package:kiv_mbkz_weather_app/physics/snow_model.dart';
 
 class RainPainter extends CustomPainter {
   List<RainModel> particles;
@@ -15,11 +14,10 @@ class RainPainter extends CustomPainter {
     particles.forEach((particle) {
       var progress = particle.animationProgress.progress(time);
       final animation = particle.tween.transform(progress);
-      final position =
-      Offset(animation["x"] * size.width, animation["y"] * size.height);
+      final position = Offset(animation["x"] * size.width, animation["y"] * size.height);
 //      canvas.drawCircle(position, size.width * 0.2 * particle.size, paint);
-      canvas.drawRRect(RRect.fromLTRBR(position.dx, position.dy, position.dx+2, position.dy+50, Radius.circular(5)), paint);
-
+      canvas.drawRRect(
+          RRect.fromLTRBR(position.dx, position.dy, position.dx + 2, position.dy + 50, Radius.circular(5)), paint);
     });
   }
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kiv_mbkz_weather_app/blocs/settings_bloc.dart';
+import 'package:kiv_mbkz_weather_app/blocs/settings/bloc.dart';
+import 'package:kiv_mbkz_weather_app/blocs/settings/settings_bloc.dart';
 
 import 'package:meta/meta.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 import 'package:kiv_mbkz_weather_app/models/models.dart' as model;
 import 'package:kiv_mbkz_weather_app/widgets/widgets.dart';
@@ -43,30 +43,44 @@ class CombinedWeatherTemperature extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(right:4.0),
-              child: Icon(Icons.opacity, color: Colors.white,size: 16,),
+              padding: const EdgeInsets.only(right: 4.0),
+              child: Icon(
+                Icons.opacity,
+                color: Colors.white,
+                size: 16,
+              ),
             ),
-            Text("${(weather.humidity).round().toString()}%",
+            Text(
+              "${(weather.humidity).round().toString()}%",
               style: TextStyle(
                 fontWeight: FontWeight.w200,
                 color: Colors.white,
-              ),),
+              ),
+            ),
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(top:4.0),
+          padding: const EdgeInsets.only(top: 4.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right:4.0),
-                child: Icon(Icons.toys, color: Colors.white,size: 16,),
-              ),
-              Text("${(weather.windSpeed * 1.609).round().toString()} km/h",
-                style: TextStyle(
-                  fontWeight: FontWeight.w200,
+                padding: const EdgeInsets.only(right: 4.0),
+                child: Icon(
+                  Icons.toys,
                   color: Colors.white,
-              ),),
+                  size: 16,
+                ),
+              ),
+              BlocBuilder<SettingsBloc, SettingsState>(
+                builder: (context, state) => Text(
+                  _formatWindSpeed(weather.windSpeed, state.temperatureUnits),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w200,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -85,5 +99,13 @@ class CombinedWeatherTemperature extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String _formatWindSpeed(double windSpeed, TemperatureUnits temperatureUnits) {
+    if (temperatureUnits == TemperatureUnits.fahrenheit) {
+      return "${(weather.windSpeed).round().toString()} mph";
+    } else {
+      return "${(weather.windSpeed * 1.609).round().toString()} km/h";
+    }
   }
 }

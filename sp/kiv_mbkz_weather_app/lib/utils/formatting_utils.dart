@@ -1,4 +1,4 @@
-import 'package:kiv_mbkz_weather_app/blocs/settings_bloc.dart';
+import 'package:kiv_mbkz_weather_app/blocs/settings/settings_bloc.dart';
 
 int toFahrenheit(double celsius) => ((celsius * 9 / 5) + 32).round();
 
