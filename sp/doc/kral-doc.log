@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2019.8.29)  20 APR 2020 17:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2019.8.29)  20 APR 2020 20:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -850,7 +850,7 @@ Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 )
-<img/fav-logo.jpg, id=51, 823.075pt x 446.66875pt>
+<img/fav-logo.jpg, id=67, 823.075pt x 446.66875pt>
 File: img/fav-logo.jpg Graphic file (type jpg)
 <use img/fav-logo.jpg>
 Package pdftex.def Info: img/fav-logo.jpg  used on input line 89.
@@ -901,7 +901,7 @@ Overfull \hbox (19.37454pt too wide) in paragraph at lines 126--126
 []\T1/lmr/bx/n/14.4 Vývoj mul-tiplat-form-ních apli-kaci po-mocí fra-meworku
  []
 
-<img/flutter-architecture.png, id=75, 793.96625pt x 405.515pt>
+<img/flutter-architecture.png, id=95, 793.96625pt x 405.515pt>
 File: img/flutter-architecture.png Graphic file (type png)
 <use img/flutter-architecture.png>
 Package pdftex.def Info: img/flutter-architecture.png  used on input line 135.
@@ -936,7 +936,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 [4]
-<img/app-menu.jpg, id=103, 1084.05pt x 2288.55pt>
+<img/app-menu.jpg, id=123, 1084.05pt x 2288.55pt>
 File: img/app-menu.jpg Graphic file (type jpg)
 <use img/app-menu.jpg>
 Package pdftex.def Info: img/app-menu.jpg  used on input line 179.
@@ -950,17 +950,17 @@ s been already used, duplicate ignored
                                                   \fi \fi 
 l.185 
        <./img/app-menu.jpg>]
-<img/app-rain.jpg, id=109, 1084.05pt x 2288.55pt>
+<img/app-rain.jpg, id=129, 1084.05pt x 2288.55pt>
 File: img/app-rain.jpg Graphic file (type jpg)
 <use img/app-rain.jpg>
 Package pdftex.def Info: img/app-rain.jpg  used on input line 194.
 (pdftex.def)             Requested size: 124.80286pt x 263.43962pt.
-<img/app-sleet.jpg, id=110, 1084.05pt x 2288.55pt>
+<img/app-sleet.jpg, id=130, 1084.05pt x 2288.55pt>
 File: img/app-sleet.jpg Graphic file (type jpg)
 <use img/app-sleet.jpg>
 Package pdftex.def Info: img/app-sleet.jpg  used on input line 197.
 (pdftex.def)             Requested size: 124.80286pt x 263.43962pt.
-<img/app-thunder.jpg, id=111, 1084.05pt x 2288.55pt>
+<img/app-thunder.jpg, id=131, 1084.05pt x 2288.55pt>
 File: img/app-thunder.jpg Graphic file (type jpg)
 <use img/app-thunder.jpg>
 Package pdftex.def Info: img/app-thunder.jpg  used on input line 200.
@@ -972,7 +972,7 @@ Package pdftex.def Info: img/app-thunder.jpg  used on input line 200.
                                                   \fi \fi 
 l.209 
        <./img/app-rain.jpg> <./img/app-sleet.jpg> <./img/app-thunder.jpg>]
-<img/app-settings.jpg, id=118, 1084.05pt x 2288.55pt>
+<img/app-settings.jpg, id=138, 1084.05pt x 2288.55pt>
 File: img/app-settings.jpg Graphic file (type jpg)
 <use img/app-settings.jpg>
 Package pdftex.def Info: img/app-settings.jpg  used on input line 214.
@@ -983,41 +983,95 @@ has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.227 \section
-              {ZÃ¡vÄ›r} <./img/app-settings.jpg>] [8
+l.221 \section
+              {Popis implemtance} <./img/app-settings.jpg>]
+
+LaTeX Warning: Command \v invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \' invalid in math mode on input line 231.
+
+
+LaTeX Warning: Command \' invalid in math mode on input line 231.
+
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
+nput line 237.
+[8
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 243.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 243.
- (./kral-doc.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 243.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 243.
+LaTeX Font Info:    Try loading font information for OMS+lmr on input line 269.
+
+ (/usr/share/texmf/tex/latex/lm/omslmr.fd
+File: omslmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 269.
+<img/bloc-architecture.png, id=170, 834.11626pt x 292.09125pt>
+File: img/bloc-architecture.png Graphic file (type png)
+<use img/bloc-architecture.png>
+Package pdftex.def Info: img/bloc-architecture.png  used on input line 276.
+(pdftex.def)             Requested size: 384.1122pt x 134.51067pt.
+ [9] [10pdfTeX warning (ext4): destination with the same identifier (name{figur
+e.5}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.294 \section
+              {ZÃ¡vÄ›r} <./img/bloc-architecture.png>] [11
+
+]
+
+! LaTeX Error: \begin{itemize} on input line 288 ended by \end{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.310 \end{document}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 310.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 310.
+(./kral-doc.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 310.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 310.
 Package rerunfilecheck Info: File `kral-doc.out' has not changed.
-(rerunfilecheck)             Checksum: 4970A31E524A9B7681BA85C5464191B0;2204.
+(rerunfilecheck)             Checksum: D04C57216905802013B91C79040D5527;3141.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 243.
- ) 
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 310.
+ )
+(\end occurred inside a group at level 1)
+
+### semi simple group (level 1) entered at line 288 (\begingroup)
+### bottom level 
 Here is how much of TeX's memory you used:
- 24626 strings out of 492615
- 456088 string characters out of 6131390
- 732149 words of memory out of 5000000
- 28079 multiletter control sequences out of 15000+600000
- 65637 words of font info for 51 fonts, out of 8000000 for 9000
+ 25053 strings out of 492615
+ 460209 string characters out of 6131390
+ 745149 words of memory out of 5000000
+ 28469 multiletter control sequences out of 15000+600000
+ 68625 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 56i,8n,67p,990b,379s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/fonts/type1/
-public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb></usr/
-share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/publi
-c/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/tex
-mf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt1
-0.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on kral-doc.pdf (9 pages, 1506901 bytes).
+ 56i,8n,67p,990b,1957s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/
+texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-math
+it.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/fonts/t
+ype1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb><
+/usr/share/texmf/fonts/type1/public/lm/lmmi12.pfb></usr/share/texmf/fonts/type1
+/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/sh
+are/texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/l
+m/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf
+/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt1
+2.pfb>
+Output written on kral-doc.pdf (12 pages, 1552302 bytes).
 PDF statistics:
- 165 PDF objects out of 1000 (max. 8388607)
- 137 compressed objects within 2 object streams
- 28 named destinations out of 1000 (max. 500000)
- 136 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 247 PDF objects out of 1000 (max. 8388607)
+ 211 compressed objects within 3 object streams
+ 60 named destinations out of 1000 (max. 500000)
+ 173 words of extra memory for PDF output out of 10000 (max. 10000000)
 

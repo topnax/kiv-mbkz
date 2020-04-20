@@ -9,4 +9,8 @@
 \contentsline {subsection}{\numberline {2.1}\IeC {\'U}vodn\IeC {\'\i } obrazovka aplikace}{5}{subsection.2.1}% 
 \contentsline {subsection}{\numberline {2.2}Obrazovka p\IeC {\v r}edpov\IeC {\v e}di po\IeC {\v c}as\IeC {\'\i }}{6}{subsection.2.2}% 
 \contentsline {subsection}{\numberline {2.3}Dialog s nastaven\IeC {\'\i }m aplikace}{7}{subsection.2.3}% 
-\contentsline {section}{\numberline {3}Z\IeC {\'a}v\IeC {\v e}r}{8}{section.3}% 
+\contentsline {section}{\numberline {3}Popis implemtance}{8}{section.3}% 
+\contentsline {subsection}{\numberline {3.1}Spr\IeC {\'a}va stav\IeC {\r u} aplikace}{8}{subsection.3.1}% 
+\contentsline {subsection}{\numberline {3.2}Pou\IeC {\v z}it\IeC {\'a} architektura pro spr\IeC {\'a}vu stav\IeC {\r u}}{9}{subsection.3.2}% 
+\contentsline {subsection}{\numberline {3.3}Mana\IeC {\v z}ement stav\IeC {\r u} procesu z\IeC {\'\i }sk\IeC {\'a}v\IeC {\'a}n\IeC {\'\i } p\IeC {\v r}edpov\IeC {\v e}di po\IeC {\v c}as\IeC {\'\i }}{9}{subsection.3.3}% 
+\contentsline {section}{\numberline {4}Z\IeC {\'a}v\IeC {\v e}r}{11}{section.4}% 

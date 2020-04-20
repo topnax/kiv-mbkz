@@ -76,8 +76,8 @@
 \begin{document}
 	% this has to be placed here, after document has been created
 	% \counterwithout{lstlisting}{chapter}
-	\renewcommand{\lstlistingname}{Ukázka zprávy}
-	\renewcommand{\lstlistlistingname}{Seznam ukázek}
+	\renewcommand{\lstlistingname}{Ukázka kódu}
+	\renewcommand{\lstlistlistingname}{Seznam ukázek kódu}
     \begin{titlepage}
 
        \centering
@@ -218,11 +218,78 @@ Pod přepínačem metrických a imperiálních jednotek se nachází tlačítko,
 
 Kliknutím na odkaz použité služby pro získávání předpovědi počasí je ve výchozím internetovém prohlížeči zařízení otevřena domovská stránka této služby.
 
+\section{Popis implemtance}
 
 
+\subsection{Správa stavů aplikace}
+
+Při vývoji mobilních aplikací ve frameworku Flutter se často setkáváme s~pojmem \textbf{state management}, jež lze volně přeložit do češtiny jako \textbf{správa stavů aplikace}. Tento pojem se při využití tohoto frameworku používá proto, že narozdíl od vývoje nativních aplikací se pro tvorbu uživatelského rozhraní v~knihovně Flutter využívá spíše deklarativního paradigmatu, kdy se jasně deklarují jednotlivé stavy, ve kterých se aplikace může nacházet. Základní myšlenku tvorby uživatelského rozhraní v~tomto frameworku představuje následující rovnost:
+
+\begin{figure}[!ht]
+\center
+$
+uživatelské\_rozhraní = f(stav\_aplikace)
+$
+\end{figure}
+
+V~praxi to znamená, že v~celém kódu Flutter aplikace například nelze nalézt žádné imperativní volání nastavení textu komponenty pro zobrazení textu na obrazovce, kdy se například na platformě Android v~nativním vývoji pro tuto operaci používá metoda \texttt{setText}. Každá část aplikace může mít vlastní stav, který se v~kódu implementuje tak, že se vytvoří potomek třídy \texttt{State} a~nadefinují se jednotlivé atributy tohoto stavu. Při aktualizaci stavu se tato celá část aplikace vykreslí znovu. Tento koncept lze nejlépe pochopit na následující ukázce kódu:
+
+\begin{lstlisting}[language=Java,caption={Jednoduchá demonstrace aktualizace uživatelského rozhraní ve frameworku Flutter},captionpos=b, label={lst:sm-showcase}]
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+  void _incrementCounter() {
+    // setState method forces the UI to redraw by
+    // saying the state of the screen has changed
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(context) {
+    return Scaffold(
+      body: Center(
+        child: Text(
+          'Counter value: ' + _counter.toString(),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: _incrementCounter),
+    );
+  }
+}
+\end{lstlisting}
+
+Avšak při vývoji složitejší aplikace brzy zjistíme, že při definici velké množiny stavů se bez sofistikovanější správy stavů kód aplikace brzy stane nepřehledným. Přístup ukázaný v~ukázce \ref{lst:sm-showcase} slouží jen k~demonstraci konceptu aktualizace uživatelského rozhraní a~nepředstavuje vhodné řešení manažementu stavů aplikace. V~praxi se zásadně používají komunitou vytvořené knihovny, mezi které například patří \texttt{provider}, \texttt{MobX}, \texttt{redux} nebo \texttt{flutter\_bloc}. Jelikož aplikace pro rozpoznávání registračních značek vozidel je netriviální aplikací, tak pro správu stavů složitejších obrazovek a~komponent byla zvolena knihovna \texttt{flutter\_bloc}, jež implementuje architekturu \textbf{BloC}.
+
+\subsection{Použitá architektura pro správu stavů}
+
+Ve vytvořené aplikaci je pro správu stavů použita architektura BloC (Bussiness Logic Components), jež rozděluje kód aplikací do tří hlavních částí:
+\begin{itemize}
+        \item \textbf{data} - datová část je zodpovědná za uložení a~manipulaci s~daty aplikace
+        \item \textbf{byznysová logika} - úkolem této vrstvy je reagovat na události z~prezentační vrstvy novými stavy aplikace
+        \item \textbf{prezentační vrsva} - uživatelské rozhrání aplikace je vykreslováno na základě získaného stavu z~byznysové logiky
+\end{itemize}
+
+\begin{figure}[!ht]
+\centering
+{\includegraphics[width=13.5cm]{img/bloc-architecture.png}}
+\caption{Diagram architektury BloC}
+\label{fig:vrp-recognition-diagram}
+\end{figure}
+
+Obsluha jednotlivých událostí je asynchronní a~prezentační vrstvě může být během jedné obsluhy události předáno několik stavů.
 
 
+\subsection{Manažement stavů procesu získávání předpovědi počasí}
 
+Pro manažement stavů procesu získávání předpovědi počasí je vytvořena komponenta byznysové logiky \texttt{WeatherBloc}, jež reaguje na následující události:
+
+\begin{itemize}
+	\item \textbf{FetchWeather} - událost, která je vyvolána při vyhledání předpovědi počasí dle názvu města. Obsluha této události se nejdříve dotázá MetaWeather API na ID lokace dle názvu města. Pokud je dle názvu města nalezena nějaká lokace, tak tato obsluha dále již konkrétní předpověď pro nalezenou lokaci. Před vyhledáním předpovědi je vrácen stav \texttt{WeatherLoading}. Po úspěšném získání předpovědi je vrácen stav \texttt{WeatherLoaded}. V případě neúspěchu získávání je vrácen stav \texttt{WeatherError}
+	\item \textbf{FetchWeatherByLocationId} - obsluha této události je velmi podobná obsluze události \texttt{FetchWeather} s tím rozdílem, že již je známé ID lokace ke které chceme získat předpověď, tudíž můžeme pomocí API vyhledat rovnou předpověď pro danou lokaci. Tato událost je vyvolávána položkami v historii již vyhledaných lokací.
+
+		
 
 \section{Závěr}
     V rámci této semestrální práce byl vytvořena dvojice programů - server a klient napodující deskovou hru Kris Kros. Důkladný a pečlivý návrh protokolu se osvědčil a v průběhu vývoje neprošel žádnými změnami. Avšak co se několikrát měnilo, byl způsob čtení zpráv, kdy nakonec jsou zprávy čteny spolehlivým automatem. Pokud bych automat navrhl hned na začátku, mohl jsem si ušetřit spoustu času laděním a upravováním parseru zpráv. Aplikace i server jsou však nyní funkční a hra je hratelná. Pokud je spojení s některým hráčem dočasně nedostupné nebo je klient násilně vypnut, tak po autorizaci je hráčovo stav korektně obnoven.
