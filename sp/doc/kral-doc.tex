@@ -24,6 +24,21 @@
 \definecolor{pred}{rgb}{0.9,0,0}
 \definecolor{pgrey}{rgb}{0.46,0.45,0.48}
 
+\usepackage{url}
+
+\usepackage[normalem]{ulem}
+\hypersetup{colorlinks,urlcolor=blue}
+
+% hack into hyperref
+\makeatletter
+\DeclareUrlCommand\ULurl@@{%
+  \def\UrlFont{\ttfamily\color{blue}}%
+  \def\UrlLeft{\uline\bgroup}%
+  \def\UrlRight{\egroup}}
+\def\ULurl@#1{\hyper@linkurl{\ULurl@@{#1}}{#1}}
+\DeclareRobustCommand*\ULurl{\hyper@normalise\ULurl@}
+\makeatother
+
 \lstset{frame=tb,
   language=C,
   aboveskip=3mm,
@@ -126,9 +141,90 @@ Prvky uživatelského rozhraní, které Flutter nabízí, se snaží co nejvěrn
 
 Flutter dále umožňuje psát nativní kód specifický pro danou platformu pomocí konstrukce zvané \texttt{platform channel}, která funguje na principu asynchronního předávání zpráv. Část Flutter aplikace pošle hostitelské nativní aplikaci zprávu, která asynchronně na tuto zprávu odpoví. Toto umožňuje přístup k~nativnímu API dané platformy.
 
-Na konci roku 2019, v~každoročním shrnutí služby GitHub, je programovací jazyk Dart, který se v~dnešní době používá nejvíce právě ve Flutter aplikacích, označen jako jazyk s~nejrychleji rostoucím počtem vývojářů, jež ho používají pro vývoj aplikací \cite{the_state_of_the_octoverse_2019}.
+Na konci roku 2019, v~každoročním shrnutí služby GitHub, je programovací jazyk Dart, který se v~dnešní době používá nejvíce právě ve Flutter aplikacích, označen jako jazyk s~nejrychleji rostoucím počtem vývojářů, jež ho používají pro vývoj aplikací.
 
-        \section{Závěr}
+
+\subsection{Výběr API pro získání dat předpovědi počasí}
+
+Nutným předpokladem pro efektivní vývoj mobilní aplikace, která zobrazuje předpověď počasí, je správný výběr služby, jež zpřístupňuje API umožňující získávání dat obsahující předpověď počasí dle názvu města a tato data jsou v přehledně strukturovaná.
+
+
+\subsubsection{Služba OpenWeather}
+
+Služba OpenWeather \footnote{OpenWeather - \ULurl{https://openweathermap.org/api}} nabízí pro registrované uživatele tarifní plán zdarma, v rámci kterého lze přistupovat k API této služby, jež poskytuje dle názvu města data obsahující předpověď počasí pro danou oblast. Pro použití tohoto API je však nutné si nechat vygenerovat API klíč, který musí být použit při každém volání tohoto API. Data poskytována tímto API jsou dostupná ve formátu JSON, XML nebo HTML. Tato služba nabízí krátkodobou i dlouhodobou předpověď počasí a plán zdarma je omezen 1000 přístupy k API denně.
+
+
+\subsubsection{Služba Weatherbit}
+
+Tato služba, jež poskytuje v rámci svého zdarma tarifního plánu API poskytující předpověď počasí, umožňuje registrovaným uživatelům až 500 přístupů k předpovědím zdarma \footnote{Weatherbit - \ULurl{https://www.weatherbit.io/api}}. Toto API je pečlivě popsané a dokonce nabízí k dispozici dokumentaci pomocí služby \textbf{Swagger}.
+
+
+\subsubsection{Služba MetaWeather}
+
+Služba MetaWeather \footnote{MetaWeather - \ULurl{https://www.metaweather.com/}} slouží jako agregátor dat předpovědi počasí ze služeb \texbf{BBC}, \textbf{Forecast.io},  \textbf{HAMweather} nebo například \textbf{OpenWeather}, čímž slibuje větší přesnost svých předpovědí. API, které tyto agregované předpovědi poskytuje, je dostupné zdarma a bez jakýchkoliv omezení. Uživatel tohoto API je však povinen ve své práci uvést odkaz na webovou stránku této služby a neměl by toto API používat ke komerčním účelům. 
+
+Poskytované API je velmi jednoduché a umožňuje vyhledávat konkrétní předpovědi pro dané lokace pomocí názvu měst. Nevýhodou této služby je to, že počet měst, pro které poskytuje předpověď počasí, je velmi malý. Například pro Českou republiku poskytuje předpověď pouze pro Prahu.
+
+
+\section{Uživatelské rozhraní vytvořené aplikace}
+
+Aplikace implementuje vlastní design uživatelského rozhraní, který je identický na obou hlavních mobilních platformách, a tak se přímo neřídí doporučeným designem iOS nebo Android aplikací.
+
+\subsection{Úvodní obrazovka aplikace}
+
+Na úvodní obrazovce aplikace je zobrazen název aplikace a logo frameworku Flutter. Pod těmito komponentami je umístěn seznam měst, ke kterým si uživatel již v minulosti vyhledal předpověd počasí. Pro tato města je automaticky získána aktuální předpověď počasí. Následně se pod tímto seznamem nachází vstupní pole, které slouží pro zadání názvu města, pro něhož si uživatel přeje zjistit předpověď počasí. Tlačítkem, jež je umístěno ve spodní části obrazovky, se spustí vyhledávání předpovědi počasí pro dané město.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.40\textwidth]{img/app-menu.jpg}
+    \caption{Úvodní obrazovka aplikace}
+    \label{fig:mesh1}
+\end{figure}
+
+Pokud uživatel klikne na nějakou položku ze seznamu již vyhledaných měst, tak se otevře detailní předpověď pro vybrané město. Dlouhým stisknutím prstu na vybranou položku je tato položka z tohoto seznamu odebrána.
+
+\subsection{Obrazovka předpovědi počasí}
+
+Na této obrazce se nachází název města, ke kterému je aktuálně zobrazována předpověd počasí. Pod názvem města je zobrazené datum, ke kterému se předpověď vztahuje. Předpověď popisuje očekávané počasí za jeden konkrétní den. Uprostřed obrazovky je zobrazena předpovídaná průměrná teplota, minimální teplota a maximální teplota za daný den. Pod teplotami jsou zobrazeny informace o vlhkosti a rychlosti větru.
+
+Horizontálním táhnutím prstu po obrazovce lze přepínat mezi předpověďmi na nadcházející dny (celkem 5 předpovědí). Každý hlavní typ počasí, které v daný den panuje, je reprezentován animovaným pozadím této obrazovky, jež se při změně typu mění a vizualizuje tak například když má v ten den pršet, sněžit nebo pokud má být jasná obloha.
+
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{img/app-rain.jpg}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{img/app-sleet.jpg}
+\endminipage\hfill
+\minipage{0.32\textwidth}%
+  \includegraphics[width=\linewidth]{img/app-thunder.jpg}
+\endminipage
+
+  \caption{Ukázka různých typů počasí, jež aplikace vizualizuje}\label{fig:awesome_image1}
+\end{figure}
+
+\subsection{Dialog s nastavením aplikace}
+
+V tomto dialogu, jež se otevře po kliknutí na ikonu ozubeného kola umístěného na v levém horním rohu úvodní obrazovky, má uživatel možnost pomocí přepínače přepnout nastavení, jestli se mají v aplikaci používat metrické nebo imperiální jednotky. Tato preference je uložena napříč jednotlivými spuštěními aplikace.
+
+Pod přepínačem metrických a imperiálních jednotek se nachází tlačítko, jež slouží pro vymazání historie jich vyhledaných měst.
+
+\begin{figure}[!ht]
+\centering
+{\includegraphics[width=0.40\textwidth]{img/app-settings.jpg}}
+\caption{Dialog s nastavením aplikace}
+\label{fig:flutter-architecture}
+\end{figure}
+
+Kliknutím na odkaz použité služby pro získávání předpovědi počasí je ve výchozím internetovém prohlížeči zařízení otevřena domovská stránka této služby.
+
+
+
+
+
+
+
+\section{Závěr}
     V rámci této semestrální práce byl vytvořena dvojice programů - server a klient napodující deskovou hru Kris Kros. Důkladný a pečlivý návrh protokolu se osvědčil a v průběhu vývoje neprošel žádnými změnami. Avšak co se několikrát měnilo, byl způsob čtení zpráv, kdy nakonec jsou zprávy čteny spolehlivým automatem. Pokud bych automat navrhl hned na začátku, mohl jsem si ušetřit spoustu času laděním a upravováním parseru zpráv. Aplikace i server jsou však nyní funkční a hra je hratelná. Pokud je spojení s některým hráčem dočasně nedostupné nebo je klient násilně vypnut, tak po autorizaci je hráčovo stav korektně obnoven.
     
 

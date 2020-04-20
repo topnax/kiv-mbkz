@@ -1,4 +1,12 @@
 \babel@toc {czech}{}
 \contentsline {section}{\numberline {1}Anal\IeC {\'y}za}{2}{section.1}% 
 \contentsline {subsection}{\numberline {1.1}V\IeC {\'y}voj multiplatformn\IeC {\'\i }ch aplikaci pomoc\IeC {\'\i } frameworku Flutter}{2}{subsection.1.1}% 
-\contentsline {section}{\numberline {2}Z\IeC {\'a}v\IeC {\v e}r}{4}{section.2}% 
+\contentsline {subsection}{\numberline {1.2}V\IeC {\'y}b\IeC {\v e}r API pro z\IeC {\'\i }sk\IeC {\'a}n\IeC {\'\i } dat p\IeC {\v r}edpov\IeC {\v e}di po\IeC {\v c}as\IeC {\'\i }}{3}{subsection.1.2}% 
+\contentsline {subsubsection}{\numberline {1.2.1}Slu\IeC {\v z}ba OpenWeather}{3}{subsubsection.1.2.1}% 
+\contentsline {subsubsection}{\numberline {1.2.2}Slu\IeC {\v z}ba Weatherbit}{4}{subsubsection.1.2.2}% 
+\contentsline {subsubsection}{\numberline {1.2.3}Slu\IeC {\v z}ba MetaWeather}{4}{subsubsection.1.2.3}% 
+\contentsline {section}{\numberline {2}U\IeC {\v z}ivatelsk\IeC {\'e} rozhran\IeC {\'\i } vytvo\IeC {\v r}en\IeC {\'e} aplikace}{5}{section.2}% 
+\contentsline {subsection}{\numberline {2.1}\IeC {\'U}vodn\IeC {\'\i } obrazovka aplikace}{5}{subsection.2.1}% 
+\contentsline {subsection}{\numberline {2.2}Obrazovka p\IeC {\v r}edpov\IeC {\v e}di po\IeC {\v c}as\IeC {\'\i }}{6}{subsection.2.2}% 
+\contentsline {subsection}{\numberline {2.3}Dialog s nastaven\IeC {\'\i }m aplikace}{7}{subsection.2.3}% 
+\contentsline {section}{\numberline {3}Z\IeC {\'a}v\IeC {\v e}r}{8}{section.3}% 

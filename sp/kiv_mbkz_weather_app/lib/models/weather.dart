@@ -43,8 +43,19 @@ class Weather extends Equatable {
       this.humidity});
 
   @override
-  List<Object> get props =>
-      [condition, formattedCondition, minTemp, temp, maxTemp, locationId, created, lastUpdated, location, humidity, windSpeed];
+  List<Object> get props => [
+        condition,
+        formattedCondition,
+        minTemp,
+        temp,
+        maxTemp,
+        locationId,
+        created,
+        lastUpdated,
+        location,
+        humidity,
+        windSpeed
+      ];
 
   static List<Weather> fromJson(dynamic json) {
     var list = List<Weather>();

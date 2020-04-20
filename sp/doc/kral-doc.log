@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2019.8.29)  19 APR 2020 19:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2019.8.29)  20 APR 2020 17:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -742,7 +742,21 @@ File: tikzlibraryarrows.code.tex 2019/02/02 v3.1.1 (3.1.1)
 tex
 File: pgflibraryarrows.code.tex 2019/02/02 v3.1.1 (3.1.1)
 \arrowsize=\dimen180
-)) (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+)) (/usr/share/texlive/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box68
+\UL@hyphenbox=\box69
+\UL@skip=\skip52
+\UL@hook=\toks41
+\UL@height=\dimen181
+\UL@pe=\count147
+\UL@pixel=\dimen182
+\ULC@box=\box70
+Package: ulem 2012/05/18
+\ULdepth=\dimen183
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 30.
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2018/09/02 1.7 listings language file
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
@@ -750,42 +764,46 @@ File: lstmisc.sty 2018/09/02 1.7 (Carsten Heinz)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2018/09/02 1.7 listings language file
-) (./kral-doc.aux)
+) (./kral-doc.aux
+
+LaTeX Warning: Label `fig:flutter-architecture' multiply defined.
+
+)
 \openout1 = `kral-doc.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 61.
-LaTeX Font Info:    ... okay on input line 61.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 61.
-LaTeX Font Info:    ... okay on input line 61.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 61.
-LaTeX Font Info:    ... okay on input line 61.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 61.
-LaTeX Font Info:    ... okay on input line 61.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 61.
-LaTeX Font Info:    ... okay on input line 61.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 61.
-LaTeX Font Info:    ... okay on input line 61.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 61.
-LaTeX Font Info:    ... okay on input line 61.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 61.
-LaTeX Font Info:    ... okay on input line 61.
-LaTeX Font Info:    Try loading font information for T1+lmr on input line 61.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Try loading font information for T1+lmr on input line 76.
  (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count147
-\scratchdimen=\dimen181
-\scratchbox=\box68
-\nofMPsegments=\count148
-\nofMParguments=\count149
-\everyMPshowfont=\toks41
-\MPscratchCnt=\count150
-\MPscratchDim=\dimen182
-\MPnumerator=\count151
-\makeMPintoPDFobject=\count152
-\everyMPtoPDFconversion=\toks42
+\scratchcounter=\count148
+\scratchdimen=\dimen184
+\scratchbox=\box71
+\nofMPsegments=\count149
+\nofMParguments=\count150
+\everyMPshowfont=\toks42
+\MPscratchCnt=\count151
+\MPscratchDim=\dimen185
+\MPnumerator=\count152
+\makeMPintoPDFobject=\count153
+\everyMPtoPDFconversion=\toks43
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
@@ -803,8 +821,8 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\AtBeginShipoutBox=\box69
-Package hyperref Info: Link coloring OFF on input line 61.
+\AtBeginShipoutBox=\box72
+Package hyperref Info: Link coloring ON on input line 76.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -812,17 +830,17 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count153
+\c@section@level=\count154
 )
-LaTeX Info: Redefining \ref on input line 61.
-LaTeX Info: Redefining \pageref on input line 61.
-LaTeX Info: Redefining \nameref on input line 61.
+LaTeX Info: Redefining \ref on input line 76.
+LaTeX Info: Redefining \pageref on input line 76.
+LaTeX Info: Redefining \nameref on input line 76.
 
 (./kral-doc.out) (./kral-doc.out)
 \@outlinefile=\write4
 \openout4 = `kral-doc.out'.
 
-\c@lstlisting=\count154
+\c@lstlisting=\count155
  ABD: EveryShipout initializing macros
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/pdflscape.sty
 Package: pdflscape 2016/05/14 v0.11 Display of landscape pages in PDF (HO)
@@ -832,10 +850,10 @@ Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 )
-<img/fav-logo.jpg, id=19, 823.075pt x 446.66875pt>
+<img/fav-logo.jpg, id=51, 823.075pt x 446.66875pt>
 File: img/fav-logo.jpg Graphic file (type jpg)
 <use img/fav-logo.jpg>
-Package pdftex.def Info: img/fav-logo.jpg  used on input line 74.
+Package pdftex.def Info: img/fav-logo.jpg  used on input line 89.
 (pdftex.def)             Requested size: 199.16928pt x 108.0819pt.
  [1
 
@@ -875,69 +893,131 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.107 
+l.122 
        [1
 
 ]
-Overfull \hbox (19.37454pt too wide) in paragraph at lines 111--111
+Overfull \hbox (19.37454pt too wide) in paragraph at lines 126--126
 []\T1/lmr/bx/n/14.4 V�voj mul-tiplat-form-n�ch apli-kaci po-moc� fra-meworku
  []
 
-<img/flutter-architecture.png, id=35, 793.96625pt x 405.515pt>
+<img/flutter-architecture.png, id=75, 793.96625pt x 405.515pt>
 File: img/flutter-architecture.png Graphic file (type png)
 <use img/flutter-architecture.png>
-Package pdftex.def Info: img/flutter-architecture.png  used on input line 120.
+Package pdftex.def Info: img/flutter-architecture.png  used on input line 135.
 (pdftex.def)             Requested size: 384.1122pt x 196.1857pt.
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 125.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 140.
 
 (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [2
 
 ]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 154.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 154.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 154.
+ [3pdfTeX warning (ext4): destination with the same identifier (name{figure.1})
+ has been already used, duplicate ignored
 
-LaTeX Warning: Citation `the_state_of_the_octoverse_2019' on page 3 undefined o
-n input line 129.
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.157 \subsubsection
+                    {Služba Weatherbit} <./img/flutter-architecture.png>]
+! Undefined control sequence.
+l.164 ...t předpovědi počasí ze služeb \texbf
+                                                  {BBC}, \textbf{Forecast.io...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-[3pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) 
+[4]
+<img/app-menu.jpg, id=103, 1084.05pt x 2288.55pt>
+File: img/app-menu.jpg Graphic file (type jpg)
+<use img/app-menu.jpg>
+Package pdftex.def Info: img/app-menu.jpg  used on input line 179.
+(pdftex.def)             Requested size: 155.99762pt x 329.29953pt.
+ [5
+
+pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
+s been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.185 
+       <./img/app-menu.jpg>]
+<img/app-rain.jpg, id=109, 1084.05pt x 2288.55pt>
+File: img/app-rain.jpg Graphic file (type jpg)
+<use img/app-rain.jpg>
+Package pdftex.def Info: img/app-rain.jpg  used on input line 194.
+(pdftex.def)             Requested size: 124.80286pt x 263.43962pt.
+<img/app-sleet.jpg, id=110, 1084.05pt x 2288.55pt>
+File: img/app-sleet.jpg Graphic file (type jpg)
+<use img/app-sleet.jpg>
+Package pdftex.def Info: img/app-sleet.jpg  used on input line 197.
+(pdftex.def)             Requested size: 124.80286pt x 263.43962pt.
+<img/app-thunder.jpg, id=111, 1084.05pt x 2288.55pt>
+File: img/app-thunder.jpg Graphic file (type jpg)
+<use img/app-thunder.jpg>
+Package pdftex.def Info: img/app-thunder.jpg  used on input line 200.
+(pdftex.def)             Requested size: 124.80286pt x 263.43962pt.
+ [6pdfTeX warning (ext4): destination with the same identifier (name{figure.3})
+ has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.209 
+       <./img/app-rain.jpg> <./img/app-sleet.jpg> <./img/app-thunder.jpg>]
+<img/app-settings.jpg, id=118, 1084.05pt x 2288.55pt>
+File: img/app-settings.jpg Graphic file (type jpg)
+<use img/app-settings.jpg>
+Package pdftex.def Info: img/app-settings.jpg  used on input line 214.
+(pdftex.def)             Requested size: 155.99762pt x 329.29953pt.
+
+[7pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) 
 has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.131         \section
-                      {Závěr} <./img/flutter-architecture.png>] [4
+l.227 \section
+              {Závěr} <./img/app-settings.jpg>] [8
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 147.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 147.
-
-(./kral-doc.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 147.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 147.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 243.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 243.
+ (./kral-doc.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 243.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 243.
 Package rerunfilecheck Info: File `kral-doc.out' has not changed.
-(rerunfilecheck)             Checksum: 74B28B258441125082CF6BDC43FA0389;526.
+(rerunfilecheck)             Checksum: 4970A31E524A9B7681BA85C5464191B0;2204.
 
 
-LaTeX Warning: There were undefined references.
+LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 147.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 243.
  ) 
 Here is how much of TeX's memory you used:
- 24460 strings out of 492615
- 454089 string characters out of 6131390
- 731289 words of memory out of 5000000
- 27953 multiletter control sequences out of 15000+600000
- 45452 words of font info for 37 fonts, out of 8000000 for 9000
+ 24626 strings out of 492615
+ 456088 string characters out of 6131390
+ 732149 words of memory out of 5000000
+ 28079 multiletter control sequences out of 15000+600000
+ 65637 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 56i,6n,67p,990b,379s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 56i,8n,67p,990b,379s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/fonts/type1/
 public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb></usr/
-share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/publi
-c/lm/lmtt12.pfb>
-Output written on kral-doc.pdf (5 pages, 222790 bytes).
+share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/publi
+c/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/tex
+mf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt1
+0.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
+Output written on kral-doc.pdf (9 pages, 1506901 bytes).
 PDF statistics:
- 70 PDF objects out of 1000 (max. 8388607)
- 56 compressed objects within 1 object stream
- 10 named destinations out of 1000 (max. 500000)
- 47 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 165 PDF objects out of 1000 (max. 8388607)
+ 137 compressed objects within 2 object streams
+ 28 named destinations out of 1000 (max. 500000)
+ 136 words of extra memory for PDF output out of 10000 (max. 10000000)
 
