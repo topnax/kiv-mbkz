@@ -281,15 +281,22 @@ Ve vytvořené aplikaci je pro správu stavů použita architektura BloC (Bussin
 Obsluha jednotlivých událostí je asynchronní a~prezentační vrstvě může být během jedné obsluhy události předáno několik stavů.
 
 
-\subsection{Manažement stavů procesu získávání předpovědi počasí}
+\subsection{Management stavů procesu získávání předpovědi počasí}
 
-Pro manažement stavů procesu získávání předpovědi počasí je vytvořena komponenta byznysové logiky \texttt{WeatherBloc}, jež reaguje na následující události:
+Pro management stavů procesu získávání předpovědi počasí je vytvořena komponenta byznysové logiky \texttt{WeatherBloc}, jež reaguje na následující události:
 
 \begin{itemize}
 	\item \textbf{FetchWeather} - událost, která je vyvolána při vyhledání předpovědi počasí dle názvu města. Obsluha této události se nejdříve dotázá MetaWeather API na ID lokace dle názvu města. Pokud je dle názvu města nalezena nějaká lokace, tak tato obsluha dále již konkrétní předpověď pro nalezenou lokaci. Před vyhledáním předpovědi je vrácen stav \texttt{WeatherLoading}. Po úspěšném získání předpovědi je vrácen stav \texttt{WeatherLoaded}. V případě neúspěchu získávání je vrácen stav \texttt{WeatherError}
 	\item \textbf{FetchWeatherByLocationId} - obsluha této události je velmi podobná obsluze události \texttt{FetchWeather} s tím rozdílem, že již je známé ID lokace ke které chceme získat předpověď, tudíž můžeme pomocí API vyhledat rovnou předpověď pro danou lokaci. Tato událost je vyvolávána položkami v historii již vyhledaných lokací.
 
-		
+
+\subsection{Management stavů procesu získávání předpovědi počasí}
+
+Stavy animovaného pozadí, které se mění při změně předpovědi počasí, jsou spravovány logikou \texttt{WeatherBackgroundBloc}, jež reaguje na následující události:
+
+\begin{itemize}
+	\item \textbf{WeatherBackgroundChanged} - událost, která je vyvolána při změně dne, pro který si chce uživatel zobrazit předpověď počasí. Pokud je mezi přepínanými dny odlišné počasí (např. slunečno a deštivo), je vrácen stav \texttt{WeatherBackgroundState} obsahující nový stav počasí. Vrácení tohoto stavu je provedeno až po krátké časové prodlevě, aby byla změna pozadí plynulá.
+
 
 \section{Závěr}
     V rámci této semestrální práce byl vytvořena dvojice programů - server a klient napodující deskovou hru Kris Kros. Důkladný a pečlivý návrh protokolu se osvědčil a v průběhu vývoje neprošel žádnými změnami. Avšak co se několikrát měnilo, byl způsob čtení zpráv, kdy nakonec jsou zprávy čteny spolehlivým automatem. Pokud bych automat navrhl hned na začátku, mohl jsem si ušetřit spoustu času laděním a upravováním parseru zpráv. Aplikace i server jsou však nyní funkční a hra je hratelná. Pokud je spojení s některým hráčem dočasně nedostupné nebo je klient násilně vypnut, tak po autorizaci je hráčovo stav korektně obnoven.
