@@ -23,6 +23,7 @@ class WeatherApiClient {
     if (locationJson.length == 0) {
       throw WeatherNotFoundException();
     }
+    // return the location ID
     return (locationJson.first)['woeid'];
   }
 

@@ -17,6 +17,7 @@ class PersistentStorageRepository {
     var cities = await storage.getRecentlySearchedCities();
     cities.removeWhere((n) => n == city);
     cities.insert(0, city);
+    // total count of stored cities is limited
     if (cities.length > MAX_RECENTLY_SEARCHED_CITIES_COUNT) {
       cities = cities.sublist(0, MAX_RECENTLY_SEARCHED_CITIES_COUNT);
     }

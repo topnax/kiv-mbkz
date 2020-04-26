@@ -18,10 +18,12 @@ class PreferencesClient implements PersistentStorage {
   static const RECENTLY_SEARCHED_CITIES_KEY = "RECENTLY_SEARCHED_CITIES_KEY";
   static const UNITS_PREFERENCE_KEY = "UNITS_PREFERENCE_KEY";
 
+  @override
   Future<List<City>> getRecentlySearchedCities() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var storedCities = prefs.getStringList(RECENTLY_SEARCHED_CITIES_KEY) ?? List<String>();
 
+    // split the stored string by field separator and parse it to City class instances
     var list = storedCities
         .map((s) => s.split(City.FIELD_SEPARATOR))
         .where((parts) => parts.length == 2 && (int.tryParse(parts[1]) ?? -1) != -1)
@@ -31,12 +33,15 @@ class PreferencesClient implements PersistentStorage {
     return Future.value(list);
   }
 
+  @override
   putRecentlySearchedCities(List<City> cities) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    // join city fields with a separator and store them into preferences
     var list = cities.map((city) => [city.name, city.woeid.toString()].join(City.FIELD_SEPARATOR)).toList();
     prefs.setStringList(RECENTLY_SEARCHED_CITIES_KEY, list);
   }
 
+  @override
   clearRecentlySearchedCitiesNames() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setStringList(RECENTLY_SEARCHED_CITIES_KEY, List<String>());
