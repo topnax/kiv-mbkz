@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather/weather_events.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather/weather_states.dart';
 import 'package:kiv_mbkz_weather_app/models/models.dart';
-import 'package:kiv_mbkz_weather_app/repositories/weather/repositories.dart';
+import 'package:kiv_mbkz_weather_app/repositories/weather/repository.dart';
 import 'package:meta/meta.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
@@ -32,6 +32,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     if (event.city.isNotEmpty) {
       yield WeatherLoading();
       try {
+        // load weather by city name from the weather repository
         final List<Weather> weather = await weatherRepository.getWeather(event.city);
         yield WeatherLoaded(weather: weather);
       } catch (e, s) {
@@ -44,7 +45,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   Stream<WeatherState> _mapFetchWeatherFromLocationIdToState(FetchWeatherFromLocationId event) async* {
     try {
       yield WeatherLoading();
-      final List<Weather> weather = await weatherRepository.getWeatherByLocationId(event.locationId);
+      // load weather by location id from the weather repository
+      final weather = await weatherRepository.getWeatherByLocationId(event.locationId);
       yield WeatherLoaded(weather: weather);
     } catch (e, s) {
       debugPrint(s.toString());

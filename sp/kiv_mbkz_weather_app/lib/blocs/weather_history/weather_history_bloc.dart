@@ -6,7 +6,7 @@ import 'package:kiv_mbkz_weather_app/blocs/weather_history/weather_history_event
 import 'package:kiv_mbkz_weather_app/blocs/weather_history/weather_history_states.dart';
 import 'package:kiv_mbkz_weather_app/models/city.dart';
 import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_repository.dart';
-import 'package:kiv_mbkz_weather_app/repositories/weather/repositories.dart';
+import 'package:kiv_mbkz_weather_app/repositories/weather/repository.dart';
 import 'package:meta/meta.dart';
 
 class WeatherHistoryBloc extends Bloc<WeatherHistoryEvent, WeatherHistoryState> {
@@ -37,7 +37,8 @@ class WeatherHistoryBloc extends Bloc<WeatherHistoryEvent, WeatherHistoryState> 
 
   Stream<WeatherHistoryState> _clearHistory() async* {
     await persistentStorageRepository.clearCityHistory();
-    yield WeatherHistoryLoaded(cities: List<City>());
+//    yield WeatherHistoryLoaded(cities: List<City>());
+    yield WeatherHistoryEmpty();
   }
 
   Stream<WeatherHistoryState> _addRecentlySearchedCity(AddRecentlySearchedCity event) async* {

@@ -22,7 +22,6 @@ class _RainState extends State<Rain> {
   @override
   void initState() {
     List.generate(widget.numberOfParticles, (index) {
-//
       particles.add(RainModel(random));
     });
     super.initState();

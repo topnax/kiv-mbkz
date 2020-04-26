@@ -52,7 +52,7 @@ class _InitialPageState extends State<InitialPage> with TickerProviderStateMixin
           },
           builder: (context, state) {
             return Stack(children: [
-              Positioned.fill(child: MenuScreen(initLoad: initLoad)),
+              Positioned.fill(child: MainMenu(initLoad: initLoad)),
               if (state is WeatherLoading || state is WeatherLoaded)
                 Stack(children: [
                   Positioned.fill(child: AnimatedBackground(color1: Colors.green)),

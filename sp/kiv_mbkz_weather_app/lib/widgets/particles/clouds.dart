@@ -21,12 +21,12 @@ class _CloudsState extends State<Clouds> {
 
   _CloudsState({this.thunder = false});
 
-  final List<CloudsModel> particles = [];
+  final List<CloudModel> particles = [];
 
   @override
   void initState() {
     List.generate(widget.numberOfParticles, (index) {
-      particles.add(CloudsModel(random));
+      particles.add(CloudModel(random));
     });
     super.initState();
   }
@@ -47,15 +47,4 @@ class _CloudsState extends State<Clouds> {
   _simulateParticles(Duration time) {
     particles.forEach((particle) => particle.maintainRestart(time));
   }
-//
-//  @override
-//  void didUpdateWidget(Clouds oldWidget) {
-//    debugPrint("what");
-//    if( (oldWidget.thunder != thunder) || oldWidget.numberOfParticles != particles.length) {
-//      setState(() {
-//
-//      });
-//    }
-//  }
-
 }

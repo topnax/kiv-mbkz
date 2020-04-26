@@ -39,24 +39,9 @@
 \DeclareRobustCommand*\ULurl{\hyper@normalise\ULurl@}
 \makeatother
 
-\lstset{frame=tb,
-  language=C,
-  aboveskip=3mm,
-  belowskip=3mm,
-  showstringspaces=false,
-  columns=flexible,
-  basicstyle={\small\ttfamily},
-  numbers=none,
-  numberstyle=\tiny\color{gray},
-  keywordstyle=\color{blue},
-  commentstyle=\color{dkgreen},
-  stringstyle=\color{mauve},
-  breaklines=true,
-  breakatwhitespace=true,
-  tabsize=3
-}
-
 \lstset{language=Java,
+  numbers=left,
+  stepnumber=1,
   showspaces=false,
   showtabs=false,
   breaklines=true,
@@ -65,10 +50,11 @@
   commentstyle=\color{pgreen},
   keywordstyle=\color{pblue},
   stringstyle=\color{pred},
-  basicstyle=\ttfamily,
+  basicstyle=\ttfamily\footnotesize,
   moredelim=[il][\textcolor{pgrey}]{$$},
   moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
 }
+
 
 \let\oldsection\section
 \renewcommand\section{\clearpage\oldsection}
@@ -223,18 +209,20 @@ Kliknutím na odkaz použité služby pro získávání předpovědi počasí je
 
 \subsection{Správa stavů aplikace}
 
-Při vývoji mobilních aplikací ve frameworku Flutter se často setkáváme s~pojmem \textbf{state management}, jež lze volně přeložit do češtiny jako \textbf{správa stavů aplikace}. Tento pojem se při využití tohoto frameworku používá proto, že narozdíl od vývoje nativních aplikací se pro tvorbu uživatelského rozhraní v~knihovně Flutter využívá spíše deklarativního paradigmatu, kdy se jasně deklarují jednotlivé stavy, ve kterých se aplikace může nacházet. Základní myšlenku tvorby uživatelského rozhraní v~tomto frameworku představuje následující rovnost:
 
-\begin{figure}[!ht]
-\center
-$
-uživatelské\_rozhraní = f(stav\_aplikace)
-$
-\end{figure}
+Při vývoji mobilních aplikací ve frameworku Flutter se často setkáváme s~pojmem \textbf{state management}, jež lze volně přeložit do češtiny jako \textbf{správa stavů aplikace}. Tento po
+jem se při využití tohoto frameworku používá proto, že na rozdíl od vývoje nativních aplikací se pro tvorbu uživatelského rozhraní v~knihovně Flutter využívá spíše deklarativního paradig
+matu, kdy se jasně deklarují jednotlivé stavy, ve kterých se aplikace může nacházet. Základní myšlenku tvorby uživatelského rozhraní v~tomto frameworku představuje následující rovnost:
+$$
+user\_interface = f(application\_state)
+$$
 
-V~praxi to znamená, že v~celém kódu Flutter aplikace například nelze nalézt žádné imperativní volání nastavení textu komponenty pro zobrazení textu na obrazovce, kdy se například na platformě Android v~nativním vývoji pro tuto operaci používá metoda \texttt{setText}. Každá část aplikace může mít vlastní stav, který se v~kódu implementuje tak, že se vytvoří potomek třídy \texttt{State} a~nadefinují se jednotlivé atributy tohoto stavu. Při aktualizaci stavu se tato celá část aplikace vykreslí znovu. Tento koncept lze nejlépe pochopit na následující ukázce kódu:
+V~praxi to znamená, že v~celém kódu Flutter aplikace například nelze nalézt žádné imperativní volání nastavení textu komponenty pro zobrazení textu na obrazovce, zatím co se například na
+ platformě Android v~nativním vývoji pro tuto operaci používá metoda \texttt{setText}. Každá část aplikace může mít vlastní stav, který se v~kódu implementuje tak, že se vytvoří potomek 
+třídy \texttt{State} a~nadefinují se jednotlivé atributy tohoto stavu. Při aktualizaci stavu se tato celá část aplikace vykreslí znovu. Tento koncept lze nejlépe pochopit na následující 
+ukázce kódu:
 
-\begin{lstlisting}[language=Java,caption={Jednoduchá demonstrace aktualizace uživatelského rozhraní ve frameworku Flutter},captionpos=b, label={lst:sm-showcase}]
+\begin{lstlisting}[language=Java,caption={Jednoduchá demonstrace aktualizace uživatelského rozhraní ve frameworku Flutter.},captionpos=b, label={lst:sm-showcase}]
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   void _incrementCounter() {
@@ -244,7 +232,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
-
   @override
   Widget build(context) {
     return Scaffold(
@@ -254,26 +241,25 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: _incrementCounter),
-    );
+          onPressed: _incrementCounter),);
   }
 }
 \end{lstlisting}
 
-Avšak při vývoji složitejší aplikace brzy zjistíme, že při definici velké množiny stavů se bez sofistikovanější správy stavů kód aplikace brzy stane nepřehledným. Přístup ukázaný v~ukázce \ref{lst:sm-showcase} slouží jen k~demonstraci konceptu aktualizace uživatelského rozhraní a~nepředstavuje vhodné řešení manažementu stavů aplikace. V~praxi se zásadně používají komunitou vytvořené knihovny, mezi které například patří \texttt{provider}, \texttt{MobX}, \texttt{redux} nebo \texttt{flutter\_bloc}. Jelikož aplikace pro rozpoznávání registračních značek vozidel je netriviální aplikací, tak pro správu stavů složitejších obrazovek a~komponent byla zvolena knihovna \texttt{flutter\_bloc}, jež implementuje architekturu \textbf{BloC}.
+Avšak při vývoji složitejší aplikace brzy zjistíme, že při definici velké množiny stavů se bez sofistikovanější správy stavů kód aplikace brzy stane nepřehledným. Přístup ukázaný v~ukázce \ref{lst:sm-showcase} slouží jen k~demonstraci konceptu aktualizace uživatelského rozhraní a~nepředstavuje vhodné řešení managementu stavů aplikace. V~praxi se zásadně používají komunitou vytvořené knihovny, mezi které patří například \texttt{provider}, \texttt{MobX}, \texttt{redux} nebo \texttt{flutter\_bloc}. Pro správu stavů obrazovek a~komponent byla zvolena knihovna \texttt{flutter\_bloc}, jež implementuje architekturu \textbf{BloC}.
 
 \subsection{Použitá architektura pro správu stavů}
 
-Ve vytvořené aplikaci je pro správu stavů použita architektura BloC (Bussiness Logic Components), jež rozděluje kód aplikací do tří hlavních částí:
+Ve vytvořené aplikaci je pro správu stavů použita architektura BloC (Bussiness Logic Components), jež rozděluje kód aplikací do tří hlavních částí: 
 \begin{itemize}
-        \item \textbf{data} -- datová část je zodpovědná za uložení a~manipulaci s~daty aplikace
-        \item \textbf{byznysová logika} -- úkolem této vrstvy je reagovat na události z~prezentační vrstvy novými stavy aplikace
-        \item \textbf{prezentační vrsva} -- uživatelské rozhrání aplikace je vykreslováno na základě získaného stavu z~byznysové logiky
+        \item \textbf{data} -- datová část je zodpovědná za uložení a~manipulaci s~daty aplikace;
+        \item \textbf{byznysová logika} -- úkolem této vrstvy je reagovat na události z~prezentační vrstvy novými stavy aplikace;
+        \item \textbf{prezentační vrsva} -- uživatelské rozhrání aplikace je vykreslováno na základě získaného stavu z~byznysové logiky.
 \end{itemize}
 
 \begin{figure}[!ht]
 \centering
-{\includegraphics[width=13.5cm]{img/bloc-architecture.png}}
+{\includegraphics[width=13.5cm]{pdf/bloc-diagram.pdf}}
 \caption{Diagram architektury BloC}
 \label{fig:vrp-recognition-diagram}
 \end{figure}
@@ -281,7 +267,7 @@ Ve vytvořené aplikaci je pro správu stavů použita architektura BloC (Bussin
 Obsluha jednotlivých událostí je asynchronní a~prezentační vrstvě může být během jedné obsluhy události předáno několik stavů.
 
 
-\subsection{Management stavů procesu získávání předpovědi počasí}
+\subsubsection{Management stavů procesu získávání předpovědi počasí}
 
 Pro management stavů procesu získávání předpovědi počasí je vytvořena komponenta byznysové logiky \texttt{WeatherBloc}, jež reaguje na následující události:
 
@@ -291,7 +277,7 @@ Pro management stavů procesu získávání předpovědi počasí je vytvořena 
 
 \end{itemize}
 
-\subsection{Management stavů procesu získávání předpovědi počasí}
+\subsubsection{Management stavů procesu získávání předpovědi počasí}
 
 Stavy animovaného pozadí, které se aktualizují při změně předpovědi počasí, jsou spravovány logikou \texttt{WeatherBackgroundBloc}, jež reaguje na následující události:
 
@@ -302,7 +288,7 @@ Stavy animovaného pozadí, které se aktualizují při změně předpovědi po�
 \end{itemize}
 
 
-\subsection{Management stavů procesu uložení historie vyhledávání}
+\subsubsection{Management stavů procesu uložení historie vyhledávání}
 
 Ukládání lokací, pro které uživatel vyhledal předpověď počasí, je řešeno v rámci logiky \texttt{WeatherHistoryBloc}, jež reaguje na následující události:
 
@@ -314,15 +300,55 @@ Ukládání lokací, pro které uživatel vyhledal předpověď počasí, je ře
 
 	\item \textbf{ClearRecentlySearchedCities} -- obsluha této události smaže historii vyhledaných lokací z preferencí aplikace a vrátí stav \texttt{WeatherHistoryEmpty}.
 
-	\item \textbf{ClearRecentylSearchedCity} -- pokud si uživatel přeje odebrat dříve vyhledanou lokaci z historie, je vyvolána tato událost, jejíž obsluha smaže vybranou lokaci z preferencí a následně vrátí stav \texttt{WeatherHistoryLoaded} nebo \texttt{WeatherHistoryEmpty} podle toho, zdali v historii zůstala nějaký záznam.
-
+	\item \textbf{ClearRecentlySearchedCity} -- pokud si uživatel přeje odebrat dříve vyhledanou lokaci z historie, je vyvolána tato událost, jejíž obsluha smaže vybranou lokaci z preferencí a následně vrátí stav \texttt{WeatherHistoryLoaded} nebo \texttt{WeatherHistoryEmpty} podle toho, zdali v historii zůstala nějaký záznam.
 
 \end{itemize}
 
 
+\subsubsection{Management stavů nastavení aplikace}
+
+Logika nastavení aplikace je definována v komponentě \texttt{SettingsBloc} a obsluhuje následující události:
+
+\begin{itemize}
+
+	\item \textbf{UnitsToggled} -- událost, která je vyvolána, když uživatel mění, jaké jednotky se mají v aplikaci používat. Tato obsluha přepíná mezi zobrazováním metrických a imperiálních jednotek. Toto nastavení se ukládá do preferencí aplikace. Je vrácen aktualizovaný stav \texttt{SettingsState}.
+
+\end{itemize}
+
+
+\subsection{Popis modulů aplikace}
+
+\subsubsection{Modul \uv{blocs}}
+Obsahuje komponenty logiky, které byly popsány v předchozí sekci.
+
+\subsubsection{Modul \uv{models}}
+Obsahuje třídy, které v aplikaci definují strukturu modelů počasí a lokace.
+
+\subsubsection{Modul \uv{pages}}
+Obsahuje definici obrazovek uživatelského rozhraní:
+
+\begin{itemize}
+	\item \texttt{initial\_page.dart} -- soubor obsahující definici uživatelského rozhraní úvodní obrazovky aplikace;
+	\item \texttt{weather\_page.dart} -- soubor obsahující definici uživatelského rozhraní detailu předpovědi počasí pro danou lokaci.
+\end{itemize}
+
+\subsubsection{Modul \uv{physics}}
+Obsahuje třídy definující simulaci pohybu jednotlivých částicí, které jsou zobrazovány v animovaném pozadí předpovědi počasí.
+
+\subsubsection{Modul \uv{repositories}}
+Obsahuje prostředky pro získání předpovědí počasí ze služby MetaWeather. Také je zde definováno perzistentní lokální úložiště, které implementuje třída \texttt{PreferencesClient} ukládající data do preferencí aplikace.
+
+\subsubsection{Modul \uv{utils}}
+Definuje funkce pro používané při formátování výpisu teploty a převodu mezi jednotkami.
+
+\subsubsection{Modul \uv{widgets}}
+Obsahuje definici znovupoužitelných widgetů uživatelského rozhraní, které se používají napříč celou aplikací. Je zde například definován widget představující tlačítko, který při zobrazení načte předpověď počasí pro danou lokaci.
+
+\subsubsection{Modul \uv{painters}}
+Modul, jež se nachází v modulu \texttt{widgets}, ve kterém jsou definovány widgety, které slouží k vykreslování jednotlivých částic animovaného pozadí, jenž vizualizuje počasí. Vykreslovány jsou sněhové vločky, kapky deště či pohybující se mraky.
+
 \section{Závěr}
-    V rámci této semestrální práce byl vytvořena dvojice programů - server a klient napodující deskovou hru Kris Kros. Důkladný a pečlivý návrh protokolu se osvědčil a v průběhu vývoje neprošel žádnými změnami. Avšak co se několikrát měnilo, byl způsob čtení zpráv, kdy nakonec jsou zprávy čteny spolehlivým automatem. Pokud bych automat navrhl hned na začátku, mohl jsem si ušetřit spoustu času laděním a upravováním parseru zpráv. Aplikace i server jsou však nyní funkční a hra je hratelná. Pokud je spojení s některým hráčem dočasně nedostupné nebo je klient násilně vypnut, tak po autorizaci je hráčovo stav korektně obnoven.
-    
+    V rámci této semestrální práce byla pomocí open-source frameworku Flutter vytvořena multiplatformní aplikace, jež využívá bezplatné služby MetaWeather k zobrazování předpovědi počasí. Předpovědi lze vyhledat podle názvu lokace. Pro již vyhledané lokace je při startu aplikace zobrazná aktuální předpověď počasí. Aplikace implementuje univerzální design, který je použitelný na obou platformách Android i iOS , přičemz implementuje plynulé animace a vizualizuje stavy počasí. Testovaná byla na mobilních zařízeních Oneplus 6 a Xiaomi Mi A1.
 
 
 %obrazek

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kiv_mbkz_weather_app/physics/cloud_model.dart';
 
 class CloudsPainter extends CustomPainter {
-  List<CloudsModel> particles;
+  List<CloudModel> particles;
   Duration time;
   final bool thunder;
 

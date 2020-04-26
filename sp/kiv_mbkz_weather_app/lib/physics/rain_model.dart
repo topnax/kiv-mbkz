@@ -20,29 +20,10 @@ class RainModel {
     final duration = Duration(milliseconds: 600 + random.nextInt(500));
 
     tween = MultiTrackTween([
-      Track("x").add(
-          duration, Tween(begin: startPosition.dx, end: endPosition.dx),
-          curve: Curves.linear),
-      Track("y").add(
-          duration, Tween(begin: startPosition.dy, end: endPosition.dy),
-          curve: Curves.linear),
+      Track("x").add(duration, Tween(begin: startPosition.dx, end: endPosition.dx), curve: Curves.linear),
+      Track("y").add(duration, Tween(begin: startPosition.dy, end: endPosition.dy), curve: Curves.linear),
     ]);
     animationProgress = AnimationProgress(duration: duration, startTime: time);
-//    size = 0.2 + random.nextDouble() * 0.3;
-//    final startPosition = Offset(-0.4 + 1.6 * random.nextDouble(), -random.nextDouble()*4);
-//    final endPosition = Offset(startPosition.dx + 0.2, 1.2);
-//    final duration = Duration(milliseconds: 1000 + random.nextInt(40));
-//
-//    tween = MultiTrackTween([
-//      Track("x").add(
-//          duration, Tween(begin: startPosition.dx, end: endPosition.dx),
-//          curve: Curves.linear),
-//      Track("y").add(
-//          duration, Tween(begin: startPosition.dy, end: endPosition.dy),
-//          curve: Curves.linear),
-//    ]);
-//
-//    animationProgress = AnimationProgress(duration: duration, startTime: time);
   }
 
   maintainRestart(Duration time) {

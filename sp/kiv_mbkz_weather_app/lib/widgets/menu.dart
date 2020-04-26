@@ -13,20 +13,20 @@ import 'package:kiv_mbkz_weather_app/widgets/utils/fade_in.dart';
 
 import 'animated/animated_wave.dart';
 
-class MenuScreen extends StatefulWidget {
+class MainMenu extends StatefulWidget {
   final String error;
 
   final bool initLoad;
 
-  MenuScreen({this.error, this.initLoad});
+  MainMenu({this.error, this.initLoad});
 
   @override
   State<StatefulWidget> createState() {
-    return MenuScreenState(initLoad: this.initLoad);
+    return MainMenuState(initLoad: this.initLoad);
   }
 }
 
-class MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
+class MainMenuState extends State<MainMenu> with TickerProviderStateMixin {
   final controller = PageController(viewportFraction: 0.8);
 
   final FocusNode _focusNode = FocusNode();
@@ -37,7 +37,7 @@ class MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
 
-  MenuScreenState({this.initLoad});
+  MainMenuState({this.initLoad});
 
   @override
   Widget build(BuildContext context) {

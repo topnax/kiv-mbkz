@@ -12,5 +12,17 @@
 \contentsline {section}{\numberline {3}Popis implemtance}{8}{section.3}% 
 \contentsline {subsection}{\numberline {3.1}Spr\IeC {\'a}va stav\IeC {\r u} aplikace}{8}{subsection.3.1}% 
 \contentsline {subsection}{\numberline {3.2}Pou\IeC {\v z}it\IeC {\'a} architektura pro spr\IeC {\'a}vu stav\IeC {\r u}}{9}{subsection.3.2}% 
-\contentsline {subsection}{\numberline {3.3}Mana\IeC {\v z}ement stav\IeC {\r u} procesu z\IeC {\'\i }sk\IeC {\'a}v\IeC {\'a}n\IeC {\'\i } p\IeC {\v r}edpov\IeC {\v e}di po\IeC {\v c}as\IeC {\'\i }}{9}{subsection.3.3}% 
-\contentsline {section}{\numberline {4}Z\IeC {\'a}v\IeC {\v e}r}{11}{section.4}% 
+\contentsline {subsubsection}{\numberline {3.2.1}Management stav\IeC {\r u} procesu z\IeC {\'\i }sk\IeC {\'a}v\IeC {\'a}n\IeC {\'\i } p\IeC {\v r}edpov\IeC {\v e}di po\IeC {\v c}as\IeC {\'\i }}{10}{subsubsection.3.2.1}% 
+\contentsline {subsubsection}{\numberline {3.2.2}Management stav\IeC {\r u} procesu z\IeC {\'\i }sk\IeC {\'a}v\IeC {\'a}n\IeC {\'\i } p\IeC {\v r}edpov\IeC {\v e}di po\IeC {\v c}as\IeC {\'\i }}{10}{subsubsection.3.2.2}% 
+\contentsline {subsubsection}{\numberline {3.2.3}Management stav\IeC {\r u} procesu ulo\IeC {\v z}en\IeC {\'\i } historie vyhled\IeC {\'a}v\IeC {\'a}n\IeC {\'\i }}{10}{subsubsection.3.2.3}% 
+\contentsline {subsubsection}{\numberline {3.2.4}Management stav\IeC {\r u} nastaven\IeC {\'\i } aplikace}{11}{subsubsection.3.2.4}% 
+\contentsline {subsection}{\numberline {3.3}Popis modul\IeC {\r u} aplikace}{11}{subsection.3.3}% 
+\contentsline {subsubsection}{\numberline {3.3.1}Modul \uv {blocs}}{11}{subsubsection.3.3.1}% 
+\contentsline {subsubsection}{\numberline {3.3.2}Modul \uv {models}}{11}{subsubsection.3.3.2}% 
+\contentsline {subsubsection}{\numberline {3.3.3}Modul \uv {pages}}{11}{subsubsection.3.3.3}% 
+\contentsline {subsubsection}{\numberline {3.3.4}Modul \uv {physics}}{12}{subsubsection.3.3.4}% 
+\contentsline {subsubsection}{\numberline {3.3.5}Modul \uv {repositories}}{12}{subsubsection.3.3.5}% 
+\contentsline {subsubsection}{\numberline {3.3.6}Modul \uv {utils}}{12}{subsubsection.3.3.6}% 
+\contentsline {subsubsection}{\numberline {3.3.7}Modul \uv {widgets}}{12}{subsubsection.3.3.7}% 
+\contentsline {subsubsection}{\numberline {3.3.8}Modul \uv {painters}}{12}{subsubsection.3.3.8}% 
+\contentsline {section}{\numberline {4}Z\IeC {\'a}v\IeC {\v e}r}{13}{section.4}% 

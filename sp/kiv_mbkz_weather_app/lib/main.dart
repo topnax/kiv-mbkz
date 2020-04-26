@@ -8,7 +8,7 @@ import 'package:kiv_mbkz_weather_app/blocs/weather/weather_bloc.dart';
 import 'package:kiv_mbkz_weather_app/blocs/weather_history/weather_history_bloc.dart';
 import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_client.dart';
 import 'package:kiv_mbkz_weather_app/repositories/preferences/preferences_repository.dart';
-import 'package:kiv_mbkz_weather_app/repositories/weather/repositories.dart';
+import 'package:kiv_mbkz_weather_app/repositories/weather/repository.dart';
 import 'package:kiv_mbkz_weather_app/repositories/weather/weather_repository.dart';
 import 'package:kiv_mbkz_weather_app/simple_bloc_delegate.dart';
 import 'package:kiv_mbkz_weather_app/pages/initial_page.dart';
