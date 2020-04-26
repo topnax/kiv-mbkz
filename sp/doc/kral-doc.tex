@@ -11,6 +11,13 @@
 \usepackage{listings}
 \usepackage{tikz}
 \usepackage{xcolor}
+
+\hypersetup{
+    colorlinks,
+    linkcolor={black!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
 \usepackage[final]{pdfpages}
 \usepackage{tabularx}
 
@@ -106,15 +113,22 @@
     \tableofcontents
     \pagebreak
 
+\section{Úvod}
+
+Cílem této práce je vytvoření mobilní multiplatformní aplikace, která bude umožňovat vyhledání a zobrazení předpovědi počasí dle názvu města. Aplikace by měla klást důraz na uživatelsky přívětivý design a implementovat zajímavé animace. Na úvodní obrazovce bude zobrazen seznam předpovědí počasí pro již vyhledané lokace.
 
    \section{Analýza}
 
 	\subsection{Vývoj multiplatformních aplikaci pomocí frameworku Flutter}
-Flutter je open-source framework na jehož vývoji se podílí převážně firma Google. Cílem Flutteru je nabídnout vývojářům možnost vyvíjet výkonné aplikace, které působí nativně na všech platformách. Flutter umožňuje sdílet veškerý kód mezi všemi platformami. Toho je docíleno tak, že knihovna nepoužívá žádné nativní komponenty uživatelského rozhraní dané platformy. Okno aplikace totiž pouze slouží jako plátno a~všechny komponenty si Flutter vykresluje sám. K~vykreslování používá open-source knihovnu Skia, která je napsaná v~jazyce C++, čímž dosahuje plynulosti ve zobrazování uživatelského rozhraní. Pro psaní Flutter aplikací se používá programovací jazyk Dart.
+Flutter je open-source framework na jehož vývoji se podílí převážně Google. Cílem Flutteru je nabídnout vývojářům možnost vyvíjet výkonné aplikace, které působí nativně na všech platformách (tzn. že tyto aplikace nelze jednoduše rozeznat od aplikací, jež jsou vyvíjené speciálně na danou platformu). Flutter umožňuje sdílet veškerý kód mezi všemi platformami. Toho je docíleno tak, že knihovna nepoužívá žádné nativní komponenty uživatelského rozhraní dané platformy. Okno aplikace totiž pouze slouží jako plátno a~všechny komponenty si Flutter vykresluje sám. K~vykreslování používá open-source knihovnu Skia, která je napsaná v~jazyce C++, čímž dosahuje plynulosti v zobrazování uživatelského rozhraní. Pro tvorbu aplikací pomocí Flutteru se používá programovací jazyk Dart.
 
-Flutter respektuje rozdíly v~chování uživatelských rozhraní mezi mobilními operačními systémy čímž pomáhá aplikacím psaným v~tomto frameworku působit tak, jako kdyby byly nativní a~cílené právě pro danou platformu. Mezi hlavní rozdíly mezi platformami, jež tato knihovna implementuje na jednotlivých platformách zvlášt, patří například \textbf{scrollování}, ikony nebo typografie.
+Flutter respektuje rozdíly v~chování uživatelských rozhraní mezi mobilními operačními systémy, čímž pomáhá aplikacím psaným v~tomto frameworku působit tak, jako kdyby byly nativní a~cílené právě pro danou platformu. Mezi hlavní rozdíly mezi platformami, jež tato knihovna implementuje na jednotlivých platformách zvlášt, patří například vertikální rolování obrazovky, ikony nebo typografie.
 
-Při nasazení na Android platformu je C a~C++ kód enginu je kompilován pomocí Android NDK, zatímco Dart kód se s~využitím kompilace typu ahead-of-time kompiluje do nativních ARM a~x86 knihoven. Tyto knihovny jsou poté použity ve vygenerované nativní Android aplikaci, která slouží jako hostitel, a~z~celého projektu je následně vytvořen APK balík. Při vyvíjení Flutter aplikace je použit virtuální stroj, který umožňuje upravovat zdrojový kód aplikace bez nutnosti ji restartovat. Tato funkcionalita má největší význam při tvorbě uživatelského rozhraní, kdy se jednotlivé změny v~designu aplikace ihned projeví na zařízení. Podobně probíhá i~nasazení aplikace na iOS platformu, kdy kód enginu je překládán pomocí LLVM. Kompilace do nativních knihoven znamená, že narozdíl od ostatních frameworků pro tvorbu multiplatformních aplikací, jsou Flutter aplikace zcela nativní.
+Při nasazení na platformu Android je C a~C++ kód enginu kompilován pomocí Android NDK (Native Development Kit), zatímco Dart kód se s~využitím kompilace typu ahead-of-time kompiluje do nativních knihoven pro procesory ARM a~x86. Tyto knihovny jsou poté použity ve vygenerované nativní aplikaci, která slouží jako hostitel, a~z~celého projektu je následně vytvořen APK balík. 
+
+Podobně probíhá i~nasazení aplikace na platformu iOS, kdy je kód enginu překládán pomocí LLVM. Kompilace do nativních knihoven znamená, že narozdíl od ostatních frameworků pro tvorbu multiplatformních aplikací, jsou Flutter aplikace zcela nativní. 
+
+Při vyvíjení aplikací pomocí Flutteru je použit virtuální stroj, který umožňuje upravovat zdrojový kód aplikace bez nutnosti ji restartovat. Tato funkce má největší význam při tvorbě uživatelského rozhraní, kdy se jednotlivé změny v~designu aplikace ihned projeví na zařízení. 
 
 \begin{figure}[!ht]
 \centering
@@ -123,16 +137,16 @@ Při nasazení na Android platformu je C a~C++ kód enginu je kompilován pomoc�
 \label{fig:flutter-architecture}
 \end{figure}
 
-Prvky uživatelského rozhraní, které Flutter nabízí, se snaží co nejvěrněji napodobit ty nativní. Prvky napodobující prvky platformy Android se nachází v~balíku \texttt{Material} a~prvky platformy iOS v~balíku \texttt{Cupertino}. Tým vývojářů Flutteru bere ohledy na aktualizace mobilních operačních systémů a~změny v~uživatelských rozhraní včasně implementuje do svého frameworku.
+Prvky uživatelského rozhraní, které Flutter nabízí, se snaží co nejvěrněji napodobit ty nativní. Prvky napodobující prvky platformy Android se nachází v~balíku \texttt{Material} a~prvky platformy iOS v~balíku \texttt{Cupertino}. Tým vývojářů Flutteru bere ohledy na aktualizace mobilních operačních systémů a~změny v~uživatelských rozhraní včas implementuje do svého frameworku.
 
-Flutter dále umožňuje psát nativní kód specifický pro danou platformu pomocí konstrukce zvané \texttt{platform channel}, která funguje na principu asynchronního předávání zpráv. Část Flutter aplikace pošle hostitelské nativní aplikaci zprávu, která asynchronně na tuto zprávu odpoví. Toto umožňuje přístup k~nativnímu API dané platformy.
+Flutter dále umožňuje psát nativní kód specifický pro danou platformu pomocí konstrukce zvané \texttt{platform channel}, která funguje na principu asynchronního předávání zpráv. Část aplikace Flutter pošle hostitelské nativní aplikaci zprávu, která asynchronně na tuto zprávu odpoví. To umožňuje přístup k~nativnímu API dané platformy. 
 
-Na konci roku 2019, v~každoročním shrnutí služby GitHub, je programovací jazyk Dart, který se v~dnešní době používá nejvíce právě ve Flutter aplikacích, označen jako jazyk s~nejrychleji rostoucím počtem vývojářů, jež ho používají pro vývoj aplikací.
+Na konci roku 2019, v~každoročním shrnutí služby GitHub, je programovací jazyk Dart, který se v~dnešní době používá nejvíce právě ve Flutter aplikacích, označen jako jazyk s~nejrychleji rostoucím počtem vývojářů, jež ho používají pro vývoj aplikací\footnote{\url{https://octoverse.github.com/#fastest-growing-languages}}.
 
 
 \subsection{Výběr API pro získání dat předpovědi počasí}
 
-Nutným předpokladem pro efektivní vývoj mobilní aplikace, která zobrazuje předpověď počasí, je správný výběr služby, jež zpřístupňuje API umožňující získávání dat obsahující předpověď počasí dle názvu města a tato data jsou v přehledně strukturovaná.
+Nutným předpokladem pro efektivní vývoj mobilní aplikace, která zobrazuje předpověď počasí, je správný výběr služby, jež zpřístupňuje API umožňující získávání dat obsahující předpověď počasí dle názvu města v přehledně strukturovaném formátu.
 
 
 \subsubsection{Služba OpenWeather}
@@ -142,17 +156,17 @@ Služba OpenWeather \footnote{OpenWeather - \ULurl{https://openweathermap.org/ap
 
 \subsubsection{Služba Weatherbit}
 
-Tato služba, jež poskytuje v rámci svého zdarma tarifního plánu API poskytující předpověď počasí, umožňuje registrovaným uživatelům až 500 přístupů k předpovědím zdarma \footnote{Weatherbit - \ULurl{https://www.weatherbit.io/api}}. Toto API je pečlivě popsané a dokonce nabízí k dispozici dokumentaci pomocí služby \textbf{Swagger}.
+Tato služba, jež poskytuje v rámci svého bezplatného tarifního plánu API poskytující předpověď počasí, umožňuje registrovaným uživatelům až 500 přístupů denně k předpovědím zdarma\footnote{Weatherbit - \ULurl{https://www.weatherbit.io/api}}. Toto API je pečlivě popsané a dokonce nabízí k dispozici dokumentaci pomocí služby \textbf{Swagger}.
 
 
 \subsubsection{Služba MetaWeather}
 
-Služba MetaWeather \footnote{MetaWeather - \ULurl{https://www.metaweather.com/}} slouží jako agregátor dat předpovědi počasí ze služeb \texbf{BBC}, \textbf{Forecast.io},  \textbf{HAMweather} nebo například \textbf{OpenWeather}, čímž slibuje větší přesnost svých předpovědí. API, které tyto agregované předpovědi poskytuje, je dostupné zdarma a bez jakýchkoliv omezení. Uživatel tohoto API je však povinen ve své práci uvést odkaz na webovou stránku této služby a neměl by toto API používat ke komerčním účelům. 
+Služba MetaWeather \footnote{MetaWeather - \ULurl{https://www.metaweather.com/}} slouží jako agregátor dat předpovědi počasí ze služeb \textbf{BBC}, \textbf{Forecast.io},  \textbf{HAMweather} nebo například \textbf{OpenWeather}, čímž slibuje větší přesnost svých předpovědí. API, které tyto agregované předpovědi poskytuje, je dostupné zdarma a bez jakýchkoliv omezení. Uživatel tohoto API je však povinen ve své práci uvést odkaz na webovou stránku této služby a neměl by toto API používat ke komerčním účelům. 
 
-Poskytované API je velmi jednoduché a umožňuje vyhledávat konkrétní předpovědi pro dané lokace pomocí názvu měst. Nevýhodou této služby je to, že počet měst, pro které poskytuje předpověď počasí, je velmi malý. Například pro Českou republiku poskytuje předpověď pouze pro Prahu.
+Poskytované API je velmi jednoduché a umožňuje vyhledávat konkrétní předpovědi pro dané lokace pomocí názvu měst. Nevýhodou této služby je to, že počet měst, pro které poskytuje předpověď počasí, je velmi malý. Například v České republice je dostupná předpověď pouze pro hlavní město Praha.
 
 
-\section{Uživatelské rozhraní vytvořené aplikace}
+\section{Uživatelské rozhraní vytvořené aplikace}\label{chapt:ui}
 
 Aplikace implementuje vlastní design uživatelského rozhraní, který je identický na obou hlavních mobilních platformách, a tak se přímo neřídí doporučeným designem iOS nebo Android aplikací.
 
@@ -173,7 +187,7 @@ Pokud uživatel klikne na nějakou položku ze seznamu již vyhledaných měst, 
 
 Na této obrazce se nachází název města, ke kterému je aktuálně zobrazována předpověd počasí. Pod názvem města je zobrazené datum, ke kterému se předpověď vztahuje. Předpověď popisuje očekávané počasí za jeden konkrétní den. Uprostřed obrazovky je zobrazena předpovídaná průměrná teplota, minimální teplota a maximální teplota za daný den. Pod teplotami jsou zobrazeny informace o vlhkosti a rychlosti větru.
 
-Horizontálním táhnutím prstu po obrazovce lze přepínat mezi předpověďmi na nadcházející dny (celkem 5 předpovědí). Každý hlavní typ počasí, které v daný den panuje, je reprezentován animovaným pozadím této obrazovky, jež se při změně typu mění a vizualizuje tak například když má v ten den pršet, sněžit nebo pokud má být jasná obloha.
+Horizontálním táhnutím prstu po obrazovce lze přepínat mezi předpověďmi na nadcházející dny (celkem 5 předpovědí). Každý hlavní typ počasí, které v daný den panuje, je reprezentován animovaným pozadím této obrazovky, jež se při změně typu mění a vizualizuje tak například, když má v daný den pršet, sněžit nebo pokud má být jasná obloha.
 
 \begin{figure}[!htb]
 \minipage{0.32\textwidth}
@@ -186,7 +200,7 @@ Horizontálním táhnutím prstu po obrazovce lze přepínat mezi předpověďmi
   \includegraphics[width=\linewidth]{img/app-thunder.jpg}
 \endminipage
 
-  \caption{Ukázka různých typů počasí, jež aplikace vizualizuje}\label{fig:awesome_image1}
+  \caption{Ukázka různých typů počasí, jež aplikace vizualizuje.}
 \end{figure}
 
 \subsection{Dialog s nastavením aplikace}
@@ -210,9 +224,7 @@ Kliknutím na odkaz použité služby pro získávání předpovědi počasí je
 \subsection{Správa stavů aplikace}
 
 
-Při vývoji mobilních aplikací ve frameworku Flutter se často setkáváme s~pojmem \textbf{state management}, jež lze volně přeložit do češtiny jako \textbf{správa stavů aplikace}. Tento po
-jem se při využití tohoto frameworku používá proto, že na rozdíl od vývoje nativních aplikací se pro tvorbu uživatelského rozhraní v~knihovně Flutter využívá spíše deklarativního paradig
-matu, kdy se jasně deklarují jednotlivé stavy, ve kterých se aplikace může nacházet. Základní myšlenku tvorby uživatelského rozhraní v~tomto frameworku představuje následující rovnost:
+Při vývoji mobilních aplikací ve frameworku Flutter se často setkáváme s~pojmem \textbf{state management}, jež lze volně přeložit do češtiny jako \textbf{správa stavů aplikace}. Tento pojem se při využití tohoto frameworku používá proto, že na rozdíl od vývoje nativních aplikací se pro tvorbu uživatelského rozhraní v~knihovně Flutter využívá spíše deklarativního paradigmatu, kdy se jasně deklarují jednotlivé stavy, ve kterých se aplikace může nacházet. Základní myšlenku tvorby uživatelského rozhraní v~tomto frameworku představuje následující rovnost:
 $$
 user\_interface = f(application\_state)
 $$
@@ -246,7 +258,7 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 \end{lstlisting}
 
-Avšak při vývoji složitejší aplikace brzy zjistíme, že při definici velké množiny stavů se bez sofistikovanější správy stavů kód aplikace brzy stane nepřehledným. Přístup ukázaný v~ukázce \ref{lst:sm-showcase} slouží jen k~demonstraci konceptu aktualizace uživatelského rozhraní a~nepředstavuje vhodné řešení managementu stavů aplikace. V~praxi se zásadně používají komunitou vytvořené knihovny, mezi které patří například \texttt{provider}, \texttt{MobX}, \texttt{redux} nebo \texttt{flutter\_bloc}. Pro správu stavů obrazovek a~komponent byla zvolena knihovna \texttt{flutter\_bloc}, jež implementuje architekturu \textbf{BloC}.
+Avšak při vývoji složitejší aplikace brzy zjistíme, že při definici velké množiny stavů se bez sofistikovanější správy stavů kód aplikace brzy stane nepřehledným. Přístup ukázaný v~ukázce \ref{lst:sm-showcase} slouží jen k~demonstraci konceptu aktualizace uživatelského rozhraní a~nepředstavuje vhodné řešení managementu stavů aplikace. V~praxi se zásadně používají komunitou vytvořené knihovny, mezi které patří například \texttt{provider}, \texttt{MobX}, \texttt{redux} nebo \texttt{flutter\_bloc}. Pro správu stavů obrazovek a~komponent v aplikaci vytvořené v rámci této práce byla zvolena knihovna \texttt{flutter\_bloc}, jež implementuje architekturu \textbf{BloC}.
 
 \subsection{Použitá architektura pro správu stavů}
 
@@ -272,12 +284,12 @@ Obsluha jednotlivých událostí je asynchronní a~prezentační vrstvě může 
 Pro management stavů procesu získávání předpovědi počasí je vytvořena komponenta byznysové logiky \texttt{WeatherBloc}, jež reaguje na následující události:
 
 \begin{itemize}
-	\item \textbf{FetchWeather} -- událost, která je vyvolána při vyhledání předpovědi počasí dle názvu města. Obsluha této události se nejdříve dotázá MetaWeather API na ID lokace dle názvu města. Pokud je dle názvu města nalezena nějaká lokace, tak tato obsluha dále již konkrétní předpověď pro nalezenou lokaci. Před vyhledáním předpovědi je vrácen stav \texttt{WeatherLoading}. Po úspěšném získání předpovědi je vrácen stav \texttt{WeatherLoaded}. V případě neúspěchu získávání je vrácen stav \texttt{WeatherError}
+	\item \textbf{FetchWeather} -- událost, která je vyvolána při vyhledání předpovědi počasí dle názvu města. Obsluha této události se nejdříve dotázá MetaWeather API na ID lokace dle názvu města. Pokud je dle názvu města nalezena nějaká lokace, tak tato obsluha dále hledá již konkrétní předpověď pro nalezenou lokaci. Před vyhledáním předpovědi je vrácen stav \texttt{WeatherLoading}. Po úspěšném získání předpovědi je vrácen stav \texttt{WeatherLoaded}. V případě neúspěšného získání je vrácen stav \texttt{WeatherError}
 	\item \textbf{FetchWeatherByLocationId} -- obsluha této události je velmi podobná obsluze události \texttt{FetchWeather} s tím rozdílem, že již je známé ID lokace ke které chceme získat předpověď, tudíž můžeme pomocí API vyhledat rovnou předpověď pro danou lokaci. Tato událost je vyvolávána položkami v historii již vyhledaných lokací.
 
 \end{itemize}
 
-\subsubsection{Management stavů procesu získávání předpovědi počasí}
+\subsubsection{Management stavů animovaného pozadí vizualizujícího počasí}
 
 Stavy animovaného pozadí, které se aktualizují při změně předpovědi počasí, jsou spravovány logikou \texttt{WeatherBackgroundBloc}, jež reaguje na následující události:
 
@@ -300,7 +312,7 @@ Ukládání lokací, pro které uživatel vyhledal předpověď počasí, je ře
 
 	\item \textbf{ClearRecentlySearchedCities} -- obsluha této události smaže historii vyhledaných lokací z preferencí aplikace a vrátí stav \texttt{WeatherHistoryEmpty}.
 
-	\item \textbf{ClearRecentlySearchedCity} -- pokud si uživatel přeje odebrat dříve vyhledanou lokaci z historie, je vyvolána tato událost, jejíž obsluha smaže vybranou lokaci z preferencí a následně vrátí stav \texttt{WeatherHistoryLoaded} nebo \texttt{WeatherHistoryEmpty} podle toho, zdali v historii zůstala nějaký záznam.
+	\item \textbf{ClearRecentlySearchedCity} -- pokud si uživatel přeje odebrat dříve vyhledanou lokaci z historie, je vyvolána tato událost, jejíž obsluha smaže vybranou lokaci z preferencí a následně vrátí stav \texttt{WeatherHistoryLoaded} nebo \texttt{WeatherHistoryEmpty} podle toho, zdali v historii zůstal nějaký záznam.
 
 \end{itemize}
 
@@ -339,7 +351,7 @@ Obsahuje třídy definující simulaci pohybu jednotlivých částicí, které j
 Obsahuje prostředky pro získání předpovědí počasí ze služby MetaWeather. Také je zde definováno perzistentní lokální úložiště, které implementuje třída \texttt{PreferencesClient} ukládající data do preferencí aplikace.
 
 \subsubsection{Modul \uv{utils}}
-Definuje funkce pro používané při formátování výpisu teploty a převodu mezi jednotkami.
+Definuje funkce používané při formátování výpisu teploty a převodu mezi jednotkami.
 
 \subsubsection{Modul \uv{widgets}}
 Obsahuje definici znovupoužitelných widgetů uživatelského rozhraní, které se používají napříč celou aplikací. Je zde například definován widget představující tlačítko, který při zobrazení načte předpověď počasí pro danou lokaci.
@@ -348,7 +360,30 @@ Obsahuje definici znovupoužitelných widgetů uživatelského rozhraní, které
 Modul, jež se nachází v modulu \texttt{widgets}, ve kterém jsou definovány widgety, které slouží k vykreslování jednotlivých částic animovaného pozadí, jenž vizualizuje počasí. Vykreslovány jsou sněhové vločky, kapky deště či pohybující se mraky.
 
 \section{Závěr}
-    V rámci této semestrální práce byla pomocí open-source frameworku Flutter vytvořena multiplatformní aplikace, jež využívá bezplatné služby MetaWeather k zobrazování předpovědi počasí. Předpovědi lze vyhledat podle názvu lokace. Pro již vyhledané lokace je při startu aplikace zobrazná aktuální předpověď počasí. Aplikace implementuje univerzální design, který je použitelný na obou platformách Android i iOS , přičemz implementuje plynulé animace a vizualizuje stavy počasí. Testovaná byla na mobilních zařízeních Oneplus 6 a Xiaomi Mi A1.
+    V rámci této semestrální práce byla pomocí open-source frameworku Flutter vytvořena multiplatformní aplikace, jež využívá bezplatné služby MetaWeather k zobrazování předpovědi počasí. Předpovědi lze vyhledat podle názvu lokace. Pro již vyhledané lokace je při startu aplikace zobrazná aktuální předpověď počasí. Aplikace implementuje univerzální design, který je použitelný na obou platformách Android i iOS , přičemz implementuje plynulé animace a vizualizuje stavy počasí. 
+    
+Tato aplikace byla primárně vyvíjena na zařízení Oneplus 6 (Android 10). Dále byla testována na zařízeních Xiaomi Mi A1 (Android 9) a Xiaomi Mi 9T Pro (Android 10), kde fungovala bez problémů. Díky frameworku Flutter, který nevyužívá nativních komponent uživatelského prostředí dané platformy, je chování aplikací vytvořených pomocí tohoto frameworku mezi verzemi operačních systémů v drtivé většině případů konzistentní.
+
+
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+
+\section{Uživatelská příručka}
+
+\subsection{Sestavení a~instalace aplikace}
+V~této sekci bude popsáno sestavení a~instalace aplikace pro operační systém Android.
+
+K~sestavení instalačního balíčku APK, který se používá při instalaci aplikací na Android OS, je třeba nainstalovat Android SDK\footnote{dostupné na \url{https://developer.android.com/studio/}}. Dále je potřeba mít na zařízení, kde chceme sestavit balíček APK, nainstalované Flutter SDK\footnote{návod dostupný na \url{https://flutter.dev/docs/get-started/install}}. Po instalaci výše zmíněného softwaru se přesuneme do kořenového adresáře přiloženého projektu a~spustíme příkaz \texttt{flutter packages get}, čímž se stáhnou všechny potřebné závislosti projektu. Po získání závislostí provedeme příkaz \texttt{flutter build apk}, po jehož dokončení vznikne v~adresáři \texttt{build/app/outputs/apk/release} instalační balíček \texttt{app-release.apk}. Pro vytvoření balíčku s~ladící verzí aplikace spustťe v~kořenovém adresáři projektu příkaz \texttt{flutter build --debug}, po jehož dokončení vznikne v~adresáři \texttt{build/app/outputs/apk/debug} balíček \texttt{app-debug.apk}. Instalace balíčku na fyzické zařízení můžeme dosáhnout dvěma způsoby:
+
+\begin{itemize}
+        \item Přesunutím instalačního balíčku na své fyzické zařízení s~operačním systémem Android a~následnou instalací tohoto balíčku tak, že ho v~zařízení otevřeme pomocí prohlížeče souborů nebo instalátoru balíčků APK.
+        \item Připojením fyzického zařízení k~počítači pomocí kabelu USB a~využitím softwaru \texttt{adb}, jež je součástí Android SDK. Následným spuštěním příkazu \texttt{adb install app-release.apk} a~jeho úspěšným dokončením je aplikace na fyzickém zařízení nainstalována.
+\end{itemize}
+
+\subsection{Ovládání aplikace}
+
+Ovládání aplikace je stejné jako u~běžných mobilních aplikacích. Změnu jazyku a~motivu aplikace lze provést v~nastavení aplikace, jež se zobrazí po kliknutí na ikonu ozubeného kola v~levém horní rohu úvodní obrazovky. Popis jednotlivých obrazovek se nachází v~kapitole \ref{chapt:ui}.
+
 
 
 %obrazek
