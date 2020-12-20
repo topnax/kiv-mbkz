@@ -1,2 +1,2 @@
 # kiv-mbkz
-A repository for KIV/MBKZ subjectz
+A repository for KIV/MBKZ subject
